@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import {useMemo, useState, type CSSProperties, type ReactNode} from 'react';
+import {useMemo, type CSSProperties, type ReactNode} from 'react';
 import {formatDate, formatMoney} from '@/lib/format';
 import type {PublicMarketPrice} from '@/types/domain';
 
@@ -22,8 +22,8 @@ function clubKey(row: PublicMarketPrice) {
 }
 
 function shareClassSort(a: PublicMarketPrice, b: PublicMarketPrice) {
-  const aCode = a.shareClassCode === '—' ? 'ZZZ' : a.shareClassCode;
-  const bCode = b.shareClassCode === '—' ? 'ZZZ' : b.shareClassCode;
+  const aCode = a.shareClassCode || 'ZZZ';
+  const bCode = b.shareClassCode || 'ZZZ';
   return aCode.localeCompare(bCode, undefined, {numeric: true, sensitivity: 'base'});
 }
 
@@ -49,15 +49,23 @@ function FlatMarketList({rows, compact}: {rows: PublicMarketPrice[]; compact: bo
   return (
     <div className={`market-list phase1-market-list phase2-market-list phase5-market-list ${compact ? 'is-compact' : ''}`}>
       <div className="market-head" aria-hidden="true">
-        <span>Club / Share</span><span>Seller</span><span>Lessor</span><span>Buyer</span><span>Lessee</span><span>Updated</span>
+        <span>Club / Share class</span><span>Seller</span><span>Lessor</span><span>Buyer</span><span>Lessee</span><span>Updated</span>
       </div>
       {rows.map((row, index) => (
-        <article className={`market-row ${row.clubName ? '' : 'is-unresolved'} ${row.clubName && !row.clubLogo ? 'has-no-visual' : ''}`} key={row.key} style={{'--row-index': index} as CSSProperties}>
+        <article
+          className={`market-row ${row.clubName ? '' : 'is-unresolved'} ${row.clubName && !row.clubLogo ? 'has-no-visual' : ''}`}
+          key={row.key}
+          style={{'--row-index': index} as CSSProperties}
+        >
           <div className="market-club">
             {row.clubLogo ? <span className="market-logo"><Image src={row.clubLogo} alt="" fill sizes="56px" /></span> : null}
             <span className="market-club-copy">
               <strong>{clubTitle(row)}</strong>
-              <small>{row.shareClassCode}{row.clubRegion ? ` · ${row.clubRegion}` : row.clubName ? '' : ' · Club identity temporarily unavailable'}</small>
+              <span className="market-share-class-inline">
+                <small>Share class</small>
+                <b>{row.shareClassCode || '—'}</b>
+                {row.clubRegion ? <em>{row.clubRegion}</em> : !row.clubName ? <em>Club identity temporarily unavailable</em> : null}
+              </span>
             </span>
           </div>
           <MarketPriceCells row={row}/>
@@ -88,54 +96,29 @@ export function MarketList({rows, compact = false}: {rows: PublicMarketPrice[]; 
     }));
   }, [rows]);
 
-  const [expanded, setExpanded] = useState<Set<string>>(() => new Set());
-
   if (compact) return <FlatMarketList rows={rows} compact/>;
 
-  const multiGroups = groups.filter((group) => group.rows.length > 1);
-  const allExpanded = multiGroups.length > 0 && multiGroups.every((group) => expanded.has(group.key));
-
-  function toggleGroup(key: string) {
-    setExpanded((current) => {
-      const next = new Set(current);
-      if (next.has(key)) next.delete(key);
-      else next.add(key);
-      return next;
-    });
-  }
-
-  function toggleAll() {
-    if (allExpanded) {
-      setExpanded(new Set());
-      return;
-    }
-    setExpanded(new Set(multiGroups.map((group) => group.key)));
-  }
-
   return (
-    <div className="grouped-market-directory">
+    <div className="grouped-market-directory grouped-market-directory-visible">
       <div className="grouped-market-summary">
         <div>
           <span>Market directory</span>
           <strong>{groups.length} club{groups.length === 1 ? '' : 's'} <i>·</i> {rows.length} share class{rows.length === 1 ? '' : 'es'}</strong>
         </div>
-        {multiGroups.length ? <button type="button" className="grouped-market-expand-all" onClick={toggleAll}>{allExpanded ? 'Collapse all' : 'Expand all'} <span aria-hidden="true">{allExpanded ? '−' : '+'}</span></button> : null}
-      </div>
-
-      <div className="grouped-market-head" aria-hidden="true">
-        <span>Share class</span><span>Seller</span><span>Lessor</span><span>Buyer</span><span>Lessee</span>
+        <p>Clubs are grouped once; every share class and its prices are shown immediately below.</p>
       </div>
 
       <div className="grouped-market-groups">
         {groups.map((group, groupIndex) => {
           const lead = group.rows[0];
-          const isExpanded = group.rows.length === 1 || expanded.has(group.key);
-          const shownRows = isExpanded ? group.rows : group.rows.slice(0, 1);
           const updated = latestDate(group.rows);
-          const hiddenCount = group.rows.length - shownRows.length;
 
           return (
-            <article className={`market-club-group ${lead.clubName ? '' : 'is-unresolved'} ${lead.clubName && !lead.clubLogo ? 'has-no-visual' : ''}`} key={group.key} style={{'--group-index': groupIndex} as CSSProperties}>
+            <article
+              className={`market-club-group market-club-group-visible ${lead.clubName ? '' : 'is-unresolved'} ${lead.clubName && !lead.clubLogo ? 'has-no-visual' : ''}`}
+              key={group.key}
+              style={{'--group-index': groupIndex} as CSSProperties}
+            >
               <header className="market-club-group-head">
                 <div className="market-group-identity">
                   {lead.clubLogo ? <span className="market-group-logo"><Image src={lead.clubLogo} alt="" fill sizes="72px" /></span> : <span className="market-group-monogram" aria-hidden="true">{(lead.clubName ?? 'PGA').slice(0, 1)}</span>}
@@ -144,22 +127,22 @@ export function MarketList({rows, compact = false}: {rows: PublicMarketPrice[]; 
                     <h3>{clubTitle(lead)}</h3>
                   </div>
                 </div>
-                <div className="market-group-meta">
-                  {updated ? <span><small>Updated</small>{formatDate(updated)}</span> : null}
-                  {group.rows.length > 1 ? <button type="button" className="market-group-toggle" aria-expanded={isExpanded} onClick={() => toggleGroup(group.key)}><span>{isExpanded ? 'Show less' : `View all ${group.rows.length}`}</span><i aria-hidden="true">{isExpanded ? '−' : '+'}</i></button> : null}
-                </div>
+                {updated ? <div className="market-group-latest"><small>Latest update</small><span>{formatDate(updated)}</span></div> : null}
               </header>
 
-              <div className="market-group-rows">
-                {shownRows.map((row, rowIndex) => (
-                  <div className="market-share-row" key={row.key} style={{'--share-index': rowIndex} as CSSProperties}>
+              <div className="market-group-table-head" aria-hidden="true">
+                <span>Share class</span><span>Seller</span><span>Lessor</span><span>Buyer</span><span>Lessee</span><span>Updated</span>
+              </div>
+
+              <div className="market-group-rows market-group-rows-visible">
+                {group.rows.map((row, rowIndex) => (
+                  <div className="market-share-row market-share-row-visible" key={row.key} style={{'--share-index': rowIndex} as CSSProperties}>
                     <div className="market-share-class"><small>Share class</small><strong>{row.shareClassCode || '—'}</strong></div>
                     <MarketPriceCells row={row}/>
+                    <div className="market-share-updated"><small>Updated</small><span>{formatDate(row.updatedAt ?? row.publishedAt ?? row.effectiveAt)}</span></div>
                   </div>
                 ))}
               </div>
-
-              {hiddenCount > 0 ? <button type="button" className="market-group-more" onClick={() => toggleGroup(group.key)}>+ {hiddenCount} more share class{hiddenCount === 1 ? '' : 'es'} <span aria-hidden="true">↘</span></button> : null}
             </article>
           );
         })}

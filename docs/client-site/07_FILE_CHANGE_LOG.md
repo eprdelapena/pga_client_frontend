@@ -62,3 +62,9 @@ No existing PGA backend or admin frontend file was modified.
 - Preserved Seller, Lessor, Buyer, Lessee, search, filters, sorting, Club links, and compact homepage market behavior.
 - Added responsive grouped-market styling in `src/app/globals.css`, including desktop market matrices and mobile 2×2 price cards.
 - Updated `/share-prices` explanatory copy to reflect the grouped interaction.
+
+## Share-price visibility refinement
+- Removed the collapsible/grouped Club market directory from `/share-prices`.
+- Every share class now renders immediately as its own visible row with Seller, Lessor, Buyer, and Lessee values.
+- Kept search, market-side filters, sorting, Club links, logo mappings, responsive layouts, and existing animations.
+- Added a compact inline Share Class badge and purpose-built mobile price cards without any expand/collapse interaction.

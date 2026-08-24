@@ -24,7 +24,7 @@ export default async function SharePricesPage({searchParams}: {searchParams: Pro
     </section>
     <section className="market-disclaimer phase1-disclaimer"><div className="shell"><strong>Market notice</strong><p>Values are reference prices and may change. Blank cells are shown as “—”; an “Inquire” value does not mean zero. Please contact PGA for current availability and transaction details.</p></div></section>
     <section className="section market-page"><div className="shell">
-      <Reveal><div className="content-intro phase1-content-intro"><p className="eyebrow">Share price directory</p><h2>Seller, Lessor, Buyer, and Lessee references in one view.</h2><p>Each Club is grouped into one market block, so multiple share classes stay together instead of repeating the same Club across the directory. Search, filter, sort, then expand a Club when you want to compare all of its share classes.</p></div></Reveal>
+      <Reveal><div className="content-intro phase1-content-intro"><p className="eyebrow">Share price directory</p><h2>Grouped by Club. Every share class stays visible.</h2><p>Each Club appears once, then all of its share classes are listed directly underneath with Seller, Lessor, Buyer, Lessee, and update details. There are no dropdowns or collapsed rows—everything you need is visible immediately.</p></div></Reveal>
       <LiveMarketExplorer source={source} initialPayload={initialMarket.payload} initialQuery={params.q ?? ''}/>
     </div></section>
   </>;
