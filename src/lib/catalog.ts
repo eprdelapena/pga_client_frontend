@@ -25,7 +25,7 @@ import type {
 export type ClubDetailLookup =
   | {status: 'ready'; data: ClubDetailResult}
   | {status: 'not-found'}
-  | {status: 'unavailable'};
+  | {status: 'unavailable'; error?: string};
 
 /**
  * The public site now defaults to the shared Google Sheet. The existing admin
@@ -54,12 +54,22 @@ function mockEnvelope(): PageEnvelope<PublicSharePriceRecord> {
 export async function getClubDirectoryResult(): Promise<ClubDirectoryResult> {
   const source = uiDataSource();
   if (source === 'sheet') {
-    const snapshot = await getGoogleSheetSnapshot();
-    return {
-      clubs: snapshot.clubs.map((entry) => entry.publicClub).filter((club) => Boolean(club.logo)),
-      source: 'sheet',
-      status: 'ready',
-    };
+    try {
+      const snapshot = await getGoogleSheetSnapshot();
+      return {
+        clubs: snapshot.clubs.map((entry) => entry.publicClub).filter((club) => Boolean(club.logo)),
+        source: 'sheet',
+        status: 'ready',
+      };
+    } catch (error) {
+      console.error('[PGA Google Sheet] Club directory load failed.', error);
+      return {
+        clubs: [],
+        source: 'sheet',
+        status: 'unavailable',
+        error: 'The live Google Sheet could not be loaded. No cached or fallback Club data is being shown.',
+      };
+    }
   }
   if (source === 'mock') {
     return {
@@ -91,17 +101,25 @@ export async function getVisibleClubs() {
 export async function getClubDetailResult(slug: string): Promise<ClubDetailLookup> {
   const source = uiDataSource();
   if (source === 'sheet') {
-    const snapshot = await getGoogleSheetSnapshot();
-    const identity = snapshot.clubs.find((entry) => entry.publicClub.slug === slug);
-    if (!identity) return {status: 'not-found'};
-    return {
-      status: 'ready',
-      data: {
-        club: identity.publicClub,
-        prices: snapshot.market.data.filter((row) => row.clubSlug === slug),
-        source: 'sheet',
-      },
-    };
+    try {
+      const snapshot = await getGoogleSheetSnapshot();
+      const identity = snapshot.clubs.find((entry) => entry.publicClub.slug === slug);
+      if (!identity) return {status: 'not-found'};
+      return {
+        status: 'ready',
+        data: {
+          club: identity.publicClub,
+          prices: snapshot.market.data.filter((row) => row.clubSlug === slug),
+          source: 'sheet',
+        },
+      };
+    } catch (error) {
+      console.error('[PGA Google Sheet] Club detail load failed.', error);
+      return {
+        status: 'unavailable',
+        error: 'The live Google Sheet could not be loaded. No cached or fallback Club data is being shown.',
+      };
+    }
   }
   if (source === 'mock') {
     const identities = mockIdentities();
@@ -142,11 +160,19 @@ export async function getClubDetailResult(slug: string): Promise<ClubDetailLooku
   }
 }
 
-export async function getInitialMarketResult(): Promise<{payload: PublicMarketEnvelope | null}> {
+export async function getInitialMarketResult(): Promise<{payload: PublicMarketEnvelope | null; error?: string}> {
   const source = uiDataSource();
   if (source === 'sheet') {
-    const snapshot = await getGoogleSheetSnapshot();
-    return {payload: snapshot.market};
+    try {
+      const snapshot = await getGoogleSheetSnapshot();
+      return {payload: snapshot.market};
+    } catch (error) {
+      console.error('[PGA Google Sheet] Share-price load failed.', error);
+      return {
+        payload: null,
+        error: 'The live Google Sheet could not be loaded. No cached or fallback Share Price data is being shown.',
+      };
+    }
   }
   if (source === 'mock') {
     const payload = normalizePublicMarket(mockEnvelope(), mockIdentities());

@@ -17,11 +17,11 @@ function numeric(value?: string) {
   return Number.isFinite(number) ? number : -1;
 }
 
-function useMarketData(source: DataSource, initialPayload: PublicMarketEnvelope | null = null) {
+function useMarketData(source: DataSource, initialPayload: PublicMarketEnvelope | null = null, initialError?: string) {
   const seeded = initialPayload ?? (source === 'mock' ? mockMarketEnvelope() : null);
   const [payload, setPayload] = useState<PublicMarketEnvelope | null>(seeded);
   const [loading, setLoading] = useState(source === 'live' && !seeded);
-  const [error, setError] = useState<{kind: 'rate'|'error'; message: string; retryAfter?: number} | null>(null);
+  const [error, setError] = useState<{kind: 'rate'|'error'; message: string; retryAfter?: number} | null>(initialError ? {kind: 'error', message: initialError} : null);
 
   const load = useCallback(async () => {
     if (source === 'mock') {
@@ -31,8 +31,8 @@ function useMarketData(source: DataSource, initialPayload: PublicMarketEnvelope 
       return;
     }
     if (source === 'sheet') {
-      // Google Sheet data is fetched server-side. A page refresh requests the
-      // latest cached/revalidated sheet without touching the PGA admin API.
+      // Google Sheet data is fetched server-side with cache: no-store.
+      // Retry performs a real page refresh against the live source.
       if (typeof window !== 'undefined') window.location.reload();
       return;
     }
@@ -84,25 +84,32 @@ function useMarketData(source: DataSource, initialPayload: PublicMarketEnvelope 
   }, [source]);
 
   useEffect(() => {
-    if (!initialPayload) void load();
-  }, [initialPayload, load]);
+    if (source !== 'sheet' && !initialPayload && !initialError) void load();
+  }, [source, initialPayload, initialError, load]);
+
+  useEffect(() => {
+    if (source !== 'sheet') return;
+    setPayload(initialPayload);
+    setLoading(false);
+    setError(initialError ? {kind: 'error', message: initialError} : null);
+  }, [source, initialPayload, initialError]);
 
   return {payload, loading, error, reload: load};
 }
 
-export function LiveMarket({source, initialPayload = null, compact = false, limit}: {source: DataSource; initialPayload?: PublicMarketEnvelope | null; compact?: boolean; limit?: number}) {
-  const {payload, loading, error, reload} = useMarketData(source, initialPayload);
+export function LiveMarket({source, initialPayload = null, initialError, compact = false, limit}: {source: DataSource; initialPayload?: PublicMarketEnvelope | null; initialError?: string; compact?: boolean; limit?: number}) {
+  const {payload, loading, error, reload} = useMarketData(source, initialPayload, initialError);
   if (loading) return <MarketSkeleton compact={compact}/>;
   if (error?.kind === 'rate') return <MarketMessage kind="rate" title="Market information is receiving high traffic." copy={`Please try again shortly${error.retryAfter ? ` — about ${error.retryAfter} seconds.` : '.'}`} onRetry={() => void reload()}/>;
-  if (error) return <MarketMessage kind="error" title="Market prices are temporarily unavailable." copy="We couldn't retrieve the current market reference. Please try again." onRetry={() => void reload()}/>;
+  if (error) return <MarketMessage kind="error" title="Live market source is unavailable." copy={error.message} onRetry={() => void reload()}/>;
   if (!payload?.data.length) return <MarketMessage kind="empty" title="No market prices are available at the moment." copy="Please check again later for club-share price references."/>;
   const pricedRows = payload.data.filter((row) => row.sellingPrice || row.sellingInquireOnly || row.lessorPrice || row.lessorInquireOnly || row.buyingPrice || row.buyingInquireOnly || row.lesseePrice || row.lesseeInquireOnly);
   const rows = typeof limit === 'number' ? pricedRows.slice(0, limit) : pricedRows;
   return <MarketList rows={rows} compact={compact}/>;
 }
 
-export function LiveMarketExplorer({source, initialPayload = null, initialQuery = ''}: {source: DataSource; initialPayload?: PublicMarketEnvelope | null; initialQuery?: string}) {
-  const {payload, loading, error, reload} = useMarketData(source, initialPayload);
+export function LiveMarketExplorer({source, initialPayload = null, initialError, initialQuery = ''}: {source: DataSource; initialPayload?: PublicMarketEnvelope | null; initialError?: string; initialQuery?: string}) {
+  const {payload, loading, error, reload} = useMarketData(source, initialPayload, initialError);
   const [query, setQuery] = useState(initialQuery);
   const [mode, setMode] = useState<Mode>('ALL');
   const [sort, setSort] = useState<SortMode>('UPDATED');
@@ -144,6 +151,6 @@ export function LiveMarketExplorer({source, initialPayload = null, initialQuery 
       </div>
       <label className="sort-field"><span>Sort</span><select value={sort} onChange={(e: ChangeEvent<HTMLSelectElement>)=>setSort(e.target.value as SortMode)}><option value="UPDATED">Recently updated</option><option value="AZ">Club A–Z</option><option value="SELLER">Seller price</option><option value="LESSOR">Lessor price</option><option value="BUYER">Buyer price</option><option value="LESSEE">Lessee price</option></select></label>
     </div>
-    {loading ? <MarketSkeleton/> : error?.kind === 'rate' ? <MarketMessage kind="rate" title="Market information is receiving high traffic." copy={`Please try again shortly${error.retryAfter ? ` — about ${error.retryAfter} seconds.` : '.'}`} onRetry={() => void reload()}/> : error ? <MarketMessage kind="error" title="Market prices are temporarily unavailable." copy="We couldn't retrieve the current market reference. Please try again." onRetry={() => void reload()}/> : !payload?.data.length ? <MarketMessage kind="empty" title="No market prices are available at the moment." copy="Please check again later for club-share price references."/> : !visible.length ? <MarketMessage kind="empty" title="No prices match those filters." copy="Try another club name, share class, or market-reference filter."/> : <MarketList rows={visible}/>} 
+    {loading ? <MarketSkeleton/> : error?.kind === 'rate' ? <MarketMessage kind="rate" title="Market information is receiving high traffic." copy={`Please try again shortly${error.retryAfter ? ` — about ${error.retryAfter} seconds.` : '.'}`} onRetry={() => void reload()}/> : error ? <MarketMessage kind="error" title="Live market source is unavailable." copy={error.message} onRetry={() => void reload()}/> : !payload?.data.length ? <MarketMessage kind="empty" title="No market prices are available at the moment." copy="Please check again later for club-share price references."/> : !visible.length ? <MarketMessage kind="empty" title="No prices match those filters." copy="Try another club name, share class, or market-reference filter."/> : <MarketList rows={visible}/>} 
   </>;
 }

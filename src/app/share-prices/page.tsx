@@ -1,7 +1,11 @@
 import type {Metadata} from 'next';
 import {LiveMarketExplorer} from '@/components/live-market';
+import {LiveSheetRefresh} from '@/components/live-sheet-refresh';
 import {getInitialMarketResult, uiDataSource} from '@/lib/catalog';
 import {pageMetadata} from '@/lib/site';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata: Metadata = pageMetadata(
   'Golf & Country Club Share Prices',
@@ -15,10 +19,13 @@ export default async function SharePricesPage({searchParams}: {searchParams: Pro
   const initialMarket = await getInitialMarketResult();
 
   return (
-    <section className="section page-content-first market-page share-prices-content-first">
+    <>
+      <LiveSheetRefresh enabled={source === 'sheet'} />
+      <section className="section page-content-first market-page share-prices-content-first">
       <div className="shell">
-        <LiveMarketExplorer source={source} initialPayload={initialMarket.payload} initialQuery={params.q ?? ''}/>
+        <LiveMarketExplorer source={source} initialPayload={initialMarket.payload} initialError={initialMarket.error} initialQuery={params.q ?? ''}/>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

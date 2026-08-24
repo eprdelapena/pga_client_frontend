@@ -11,6 +11,7 @@ import {getClubDirectoryResult, getInitialMarketResult, uiDataSource} from '@/li
 import {pageMetadata} from '@/lib/site';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata: Metadata = pageMetadata(
   'Golf & Country Club Share Brokerage',
@@ -85,7 +86,7 @@ export default async function Home() {
 
     <section className="section market-preview-section phase3-market-preview"><div className="shell">
       <Reveal><div className="market-title-row phase3-market-title"><SectionHeading eyebrow="Published market" title="A live view built for clarity." copy="Review published indicative Share Prices in a focused market view, then connect with PGA for current availability and personalized brokerage guidance."/><Link href="/share-prices" className="text-link">View all share prices <span>↗</span></Link></div></Reveal>
-      <Reveal delay={100}><LiveMarket source={source} initialPayload={initialMarket.payload} compact limit={7}/></Reveal>
+      <Reveal delay={100}><LiveMarket source={source} initialPayload={initialMarket.payload} initialError={initialMarket.error} compact limit={7}/></Reveal>
       <p className="market-footnote">Indicative prices are subject to change. {source === 'mock' ? 'This environment is explicitly configured for demo data.' : "Published market references are shown from PGA\'s current public market feed."}</p>
     </div></section>
 

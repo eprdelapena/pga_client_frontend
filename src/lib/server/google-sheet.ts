@@ -1,5 +1,5 @@
 import {createHash} from 'node:crypto';
-import fallbackWorkbook from '@/data/google-sheet-fallback.json';
+import {inflateRawSync} from 'node:zlib';
 import {resolveClubAsset} from '@/config/club-assets';
 import type {
   DataSource,
@@ -11,8 +11,7 @@ import type {
 } from '@/types/domain';
 
 const DEFAULT_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1c_RiL5AWpjpXSZh7KnmfCNOGK7fLnGjF/edit?usp=sharing&ouid=114545058470474875217&rtpof=true&sd=true';
-const DEFAULT_GID = '0';
-const DEFAULT_REVALIDATE_SECONDS = 60;
+const DEFAULT_SHEET_TAB = 'August 24, 2026';
 const DEFAULT_TIMEOUT_MS = 6_000;
 
 type SheetCell = string | number | boolean | null;
@@ -22,7 +21,6 @@ type ParsedSheet = {
   clubs: InternalClubIdentity[];
   market: PublicMarketEnvelope;
   asOf?: string;
-  usedFallback: boolean;
 };
 
 function positiveInt(value: string | undefined, fallback: number): number {
@@ -38,16 +36,17 @@ function sheetConfig() {
 
   const gidFromUrl = (() => {
     try {
-      return new URL(url).searchParams.get('gid');
+      const parsed = new URL(url);
+      return parsed.searchParams.get('gid') || new URLSearchParams(parsed.hash.replace(/^#/, '')).get('gid');
     } catch {
       return null;
     }
   })();
-  const gid = process.env.PGA_GOOGLE_SHEET_GID?.trim() || gidFromUrl || DEFAULT_GID;
-  const revalidate = positiveInt(process.env.PGA_GOOGLE_SHEET_REVALIDATE_SECONDS, DEFAULT_REVALIDATE_SECONDS);
+  const gid = process.env.PGA_GOOGLE_SHEET_GID?.trim() || gidFromUrl || undefined;
+  const sheetTab = process.env.PGA_GOOGLE_SHEET_TAB?.trim() || DEFAULT_SHEET_TAB;
+  const csvOverride = process.env.PGA_GOOGLE_SHEET_CSV_URL?.trim() || undefined;
   const timeout = positiveInt(process.env.PGA_GOOGLE_SHEET_TIMEOUT_MS, DEFAULT_TIMEOUT_MS);
-  const exportUrl = `https://docs.google.com/spreadsheets/d/${encodeURIComponent(id)}/export?format=csv&gid=${encodeURIComponent(gid)}`;
-  return {url, id, gid, exportUrl, revalidate, timeout};
+  return {url, id, gid, sheetTab, csvOverride, timeout};
 }
 
 function cleanCell(value: SheetCell | undefined): string {
@@ -193,7 +192,7 @@ function findHeader(rows: SheetRows) {
   throw new Error('The Google Sheet does not contain the expected PGA share-price headers.');
 }
 
-function buildSnapshot(rows: SheetRows, usedFallback: boolean): ParsedSheet {
+function buildSnapshot(rows: SheetRows): ParsedSheet {
   const header = findHeader(rows);
   let asOf: string | undefined;
   for (let rowIndex = 0; rowIndex < header.rowIndex; rowIndex += 1) {
@@ -323,50 +322,220 @@ function buildSnapshot(rows: SheetRows, usedFallback: boolean): ParsedSheet {
       data: market,
       page: {limit: market.length, nextCursor: null, hasMore: false},
       meta: {
-        correlationId: usedFallback ? 'google-sheet-fallback' : `google-sheet-${shortHash(process.env.PGA_GOOGLE_SHEET_URL?.trim() || DEFAULT_SHEET_URL, 'sheet')}`,
+        correlationId: `google-sheet-${shortHash(process.env.PGA_GOOGLE_SHEET_URL?.trim() || DEFAULT_SHEET_URL, 'sheet')}`,
         total: market.length,
         source,
         unresolvedClubCount: 0,
         withoutVisualCount,
         sheetAsOf: asOf,
-        sheetFallback: usedFallback,
       },
     },
     asOf,
-    usedFallback,
   };
+}
+
+function decodeXml(value: string): string {
+  return value
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, '&')
+    .replace(/&#(\d+);/g, (_match, code: string) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_match, code: string) => String.fromCodePoint(Number.parseInt(code, 16)));
+}
+
+function xmlAttributes(tag: string): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const match of tag.matchAll(/([:\w.-]+)="([^"]*)"/g)) result[match[1]] = decodeXml(match[2]);
+  return result;
+}
+
+function zipEntry(archive: Buffer, wantedName: string): Buffer | null {
+  const minOffset = Math.max(0, archive.length - 65_557);
+  let eocd = -1;
+  for (let offset = archive.length - 22; offset >= minOffset; offset -= 1) {
+    if (archive.readUInt32LE(offset) === 0x06054b50) {
+      eocd = offset;
+      break;
+    }
+  }
+  if (eocd < 0) throw new Error('Downloaded workbook is not a valid XLSX ZIP archive.');
+
+  const entryCount = archive.readUInt16LE(eocd + 10);
+  let offset = archive.readUInt32LE(eocd + 16);
+  for (let index = 0; index < entryCount; index += 1) {
+    if (archive.readUInt32LE(offset) !== 0x02014b50) throw new Error('Downloaded workbook has an invalid ZIP directory.');
+    const method = archive.readUInt16LE(offset + 10);
+    const compressedSize = archive.readUInt32LE(offset + 20);
+    const nameLength = archive.readUInt16LE(offset + 28);
+    const extraLength = archive.readUInt16LE(offset + 30);
+    const commentLength = archive.readUInt16LE(offset + 32);
+    const localOffset = archive.readUInt32LE(offset + 42);
+    const name = archive.subarray(offset + 46, offset + 46 + nameLength).toString('utf8');
+
+    if (name === wantedName) {
+      if (archive.readUInt32LE(localOffset) !== 0x04034b50) throw new Error('Downloaded workbook has an invalid ZIP entry.');
+      const localNameLength = archive.readUInt16LE(localOffset + 26);
+      const localExtraLength = archive.readUInt16LE(localOffset + 28);
+      const start = localOffset + 30 + localNameLength + localExtraLength;
+      const compressed = archive.subarray(start, start + compressedSize);
+      if (method === 0) return Buffer.from(compressed);
+      if (method === 8) return inflateRawSync(compressed);
+      throw new Error(`Downloaded workbook uses unsupported ZIP compression method ${method}.`);
+    }
+
+    offset += 46 + nameLength + extraLength + commentLength;
+  }
+  return null;
+}
+
+function columnIndex(cellRef: string): number {
+  const match = /^([A-Z]+)/i.exec(cellRef);
+  if (!match) return 0;
+  let value = 0;
+  for (const character of match[1].toUpperCase()) value = value * 26 + character.charCodeAt(0) - 64;
+  return Math.max(0, value - 1);
+}
+
+function xlsxRows(archive: Buffer, preferredTab: string): SheetRows {
+  const workbookXml = zipEntry(archive, 'xl/workbook.xml')?.toString('utf8');
+  const relationshipsXml = zipEntry(archive, 'xl/_rels/workbook.xml.rels')?.toString('utf8');
+  if (!workbookXml || !relationshipsXml) throw new Error('Downloaded XLSX is missing workbook metadata.');
+
+  const sheetTags = Array.from(workbookXml.matchAll(/<sheet\b[^>]*\/?\s*>/g), (match) => match[0]);
+  if (!sheetTags.length) throw new Error('Downloaded XLSX contains no worksheets.');
+  const selectedTag = sheetTags.find((tag) => xmlAttributes(tag).name === preferredTab) ?? sheetTags[0];
+  const relationshipId = xmlAttributes(selectedTag)['r:id'];
+  if (!relationshipId) throw new Error('Downloaded XLSX worksheet relationship is missing.');
+
+  const relationshipTags = Array.from(relationshipsXml.matchAll(/<Relationship\b[^>]*\/?\s*>/g), (match) => match[0]);
+  const relationship = relationshipTags.find((tag) => xmlAttributes(tag).Id === relationshipId);
+  const target = relationship ? xmlAttributes(relationship).Target : undefined;
+  if (!target) throw new Error('Downloaded XLSX worksheet target is missing.');
+  const sheetPath = target.startsWith('/') ? target.replace(/^\//, '') : target.startsWith('xl/') ? target : `xl/${target}`;
+  const sheetXml = zipEntry(archive, sheetPath)?.toString('utf8');
+  if (!sheetXml) throw new Error(`Downloaded XLSX is missing worksheet ${preferredTab}.`);
+
+  const sharedStringsXml = zipEntry(archive, 'xl/sharedStrings.xml')?.toString('utf8');
+  const sharedStrings = sharedStringsXml
+    ? Array.from(sharedStringsXml.matchAll(/<si\b[^>]*>([\s\S]*?)<\/si>/g), (match) =>
+        Array.from(match[1].matchAll(/<t\b[^>]*>([\s\S]*?)<\/t>/g), (text) => decodeXml(text[1])).join(''),
+      )
+    : [];
+
+  const rows: SheetRows = [];
+  for (const rowMatch of sheetXml.matchAll(/<row\b[^>]*>([\s\S]*?)<\/row>/g)) {
+    const row: SheetCell[] = [];
+    const cellPattern = /<c\b([^>]*)\/>|<c\b([^>]*)>([\s\S]*?)<\/c>/g;
+    for (const cellMatch of rowMatch[1].matchAll(cellPattern)) {
+      const attributes = xmlAttributes(`<c ${cellMatch[1] || cellMatch[2] || ''}>`);
+      const body = cellMatch[3] || '';
+      const cellPosition = columnIndex(attributes.r || 'A1');
+      let value: SheetCell = '';
+
+      if (attributes.t === 'inlineStr') {
+        value = Array.from(body.matchAll(/<t\b[^>]*>([\s\S]*?)<\/t>/g), (text) => decodeXml(text[1])).join('');
+      } else {
+        const valueMatch = /<v\b[^>]*>([\s\S]*?)<\/v>/.exec(body);
+        const raw = valueMatch ? decodeXml(valueMatch[1]) : '';
+        if (attributes.t === 's' && raw !== '') value = sharedStrings[Number(raw)] ?? '';
+        else if (attributes.t === 'b') value = raw === '1';
+        else if (raw !== '' && /^-?\d+(?:\.\d+)?(?:[Ee][+-]?\d+)?$/.test(raw)) value = Number(raw);
+        else value = raw;
+      }
+      row[cellPosition] = value;
+    }
+    rows.push(row);
+  }
+  return rows;
+}
+
+function freshUrl(url: string): string {
+  const parsed = new URL(url);
+  parsed.searchParams.set('_pga', Date.now().toString());
+  return parsed.toString();
+}
+
+async function fetchTextCandidate(url: string, timeout: number): Promise<SheetRows> {
+  const response = await fetch(freshUrl(url), {
+    headers: {
+      Accept: 'text/csv,text/plain;q=0.9,*/*;q=0.1',
+      'Cache-Control': 'no-cache, no-store, max-age=0',
+      Pragma: 'no-cache',
+    },
+    cache: 'no-store',
+    signal: AbortSignal.timeout(timeout),
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const text = await response.text();
+  if (!text.trim()) throw new Error('empty response');
+  if (/<!doctype html|<html/i.test(text.slice(0, 500))) throw new Error('HTML response instead of CSV');
+  const rows = parseCsv(text);
+  findHeader(rows);
+  return rows;
+}
+
+async function fetchWorkbookCandidate(url: string, timeout: number, sheetTab: string): Promise<SheetRows> {
+  const response = await fetch(freshUrl(url), {
+    headers: {
+      Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/octet-stream;q=0.9,*/*;q=0.1',
+      'Cache-Control': 'no-cache, no-store, max-age=0',
+      Pragma: 'no-cache',
+    },
+    cache: 'no-store',
+    signal: AbortSignal.timeout(timeout),
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const archive = Buffer.from(await response.arrayBuffer());
+  if (archive.length < 4 || archive[0] !== 0x50 || archive[1] !== 0x4b) throw new Error('response is not an XLSX workbook');
+  const rows = xlsxRows(archive, sheetTab);
+  findHeader(rows);
+  return rows;
 }
 
 async function fetchSheetRows(): Promise<SheetRows> {
   const config = sheetConfig();
-  const response = await fetch(config.exportUrl, {
-    headers: {
-      Accept: 'text/csv,text/plain;q=0.9,*/*;q=0.1',
-      'User-Agent': 'PGA-Clubshares-Public-Site/1.0',
-    },
-    next: {revalidate: config.revalidate},
-    signal: AbortSignal.timeout(config.timeout),
-  });
+  const csvCandidates = [
+    config.csvOverride,
+    config.gid ? `https://docs.google.com/spreadsheets/d/${encodeURIComponent(config.id)}/export?format=csv&gid=${encodeURIComponent(config.gid)}` : undefined,
+    `https://docs.google.com/spreadsheets/d/${encodeURIComponent(config.id)}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(config.sheetTab)}`,
+    `https://docs.google.com/spreadsheets/d/${encodeURIComponent(config.id)}/export?format=csv`,
+  ].filter((candidate, index, all): candidate is string => Boolean(candidate) && all.indexOf(candidate) === index);
 
-  if (!response.ok) throw new Error(`Google Sheet export returned HTTP ${response.status}.`);
-  const text = await response.text();
-  if (!text.trim()) throw new Error('Google Sheet export returned an empty response.');
-  if (/<!doctype html|<html/i.test(text.slice(0, 500))) {
-    throw new Error('Google Sheet export is not publicly readable as CSV.');
+  const failures: string[] = [];
+  for (const candidate of csvCandidates) {
+    try {
+      return await fetchTextCandidate(candidate, config.timeout);
+    } catch (error) {
+      failures.push(`CSV ${new URL(candidate).pathname}: ${error instanceof Error ? error.message : String(error)}`);
+    }
   }
-  return parseCsv(text);
+
+  // The supplied PGA file can be an uploaded .xlsx opened in Google Sheets
+  // compatibility mode. Native Sheets CSV export can return HTTP 400 for that
+  // kind of Drive file, so try the SAME live Google-hosted workbook as XLSX.
+  // This is an alternate transport for the live source, not a data fallback.
+  const workbookCandidates = [
+    `https://drive.usercontent.google.com/download?id=${encodeURIComponent(config.id)}&export=download&confirm=t`,
+    `https://drive.google.com/uc?export=download&id=${encodeURIComponent(config.id)}`,
+    `https://docs.google.com/spreadsheets/d/${encodeURIComponent(config.id)}/export?format=xlsx`,
+  ];
+  for (const candidate of workbookCandidates) {
+    try {
+      return await fetchWorkbookCandidate(candidate, config.timeout, config.sheetTab);
+    } catch (error) {
+      failures.push(`XLSX ${new URL(candidate).hostname}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+
+  throw new Error(`Google-hosted sheet/workbook could not be read. ${failures.join(' | ')}`);
 }
 
 export async function getGoogleSheetSnapshot(): Promise<ParsedSheet> {
-  try {
-    return buildSnapshot(await fetchSheetRows(), false);
-  } catch (error) {
-    // The bundled snapshot comes from the same supplied workbook and is only a
-    // resilience fallback. It prevents a temporary Google outage or permission
-    // issue from blanking the public site; no PGA admin/backend API is called.
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn('[PGA Google Sheet] Live sheet unavailable; using bundled snapshot.', error);
-    }
-    return buildSnapshot(fallbackWorkbook.rows as SheetRows, true);
-  }
+  // Live-only by design: every request reads the shared Google-hosted source.
+  // There is intentionally no bundled JSON/workbook fallback. If Google cannot
+  // be read, the error propagates so the public UI can show a real data-source
+  // error instead of displaying stale information.
+  return buildSnapshot(await fetchSheetRows());
 }

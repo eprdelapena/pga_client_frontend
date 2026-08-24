@@ -173,7 +173,6 @@ export interface PublicMarketEnvelope {
     unresolvedClubCount: number;
     withoutVisualCount: number;
     sheetAsOf?: string;
-    sheetFallback?: boolean;
   };
 }
 
@@ -181,6 +180,7 @@ export interface ClubDirectoryResult {
   clubs: PublicClub[];
   source: DataSource;
   status: 'ready' | 'unavailable';
+  error?: string;
 }
 
 export interface ClubDetailResult {

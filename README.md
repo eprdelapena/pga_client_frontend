@@ -9,16 +9,16 @@ The website now defaults to PGA's shared Google Sheet for the public Club Direct
 ```env
 PGA_UI_DATA_SOURCE=sheet
 PGA_GOOGLE_SHEET_URL=https://docs.google.com/spreadsheets/d/1c_RiL5AWpjpXSZh7KnmfCNOGK7fLnGjF/edit?usp=sharing&ouid=114545058470474875217&rtpof=true&sd=true
-PGA_GOOGLE_SHEET_GID=0
-PGA_GOOGLE_SHEET_REVALIDATE_SECONDS=60
+PGA_GOOGLE_SHEET_GID=
+PGA_GOOGLE_SHEET_TAB=August 24, 2026
 PGA_GOOGLE_SHEET_TIMEOUT_MS=6000
 ```
 
 `sheet` is also the default when `PGA_UI_DATA_SOURCE` is omitted.
 
-The Next.js server reads the shared Sheet through Google's CSV export endpoint. `/clubs`, `/share-prices`, Club detail pages, and the homepage Club/market previews therefore do not require the PGA admin/backend API while Sheet mode is active. Browser JavaScript does not call the Google Sheet directly.
+The Next.js server reads the shared Google-hosted Sheet/workbook directly. `/clubs`, `/share-prices`, Club detail pages, and the homepage Club/market previews therefore do not require the PGA admin/backend API while Sheet mode is active. Browser JavaScript does not call Google directly.
 
-The Sheet must remain readable through its shared link for live updates to appear. A bundled snapshot generated from the supplied PGA workbook is retained only as a resilience fallback if Google is temporarily unreachable or the shared CSV cannot be read. Sheet mode never falls back to the admin API.
+**There is no data fallback in Sheet mode.** The Google requests use `cache: 'no-store'`, no Next.js revalidation cache is used, and a cache-busting request parameter is added. Every server page refresh asks Google for the current source again. `/clubs` and `/share-prices` also trigger a server refresh every 15 seconds while open, so Sheet changes can appear without a manual browser reload. If the Google source cannot be read, the UI displays a source error and does not show bundled JSON, mock data, or admin API data.
 
 If PGA later creates a new worksheet/tab for a newer market update, set `PGA_GOOGLE_SHEET_GID` to that tab's `gid` from the Google Sheet URL.
 
@@ -61,3 +61,10 @@ npm run typecheck
 npm run build
 npm run dev -- -p 3001
 ```
+
+
+## Google-hosted XLSX compatibility
+
+The public catalog first tries the live Google Sheets CSV endpoint. If the shared PGA file is an uploaded `.xlsx` opened in Google Sheets compatibility mode and Google returns HTTP 400 for CSV export, the server downloads that **same live Google-hosted workbook** and reads the configured worksheet (`PGA_GOOGLE_SHEET_TAB`, default `August 24, 2026`) directly. This is an alternate transport for the same live source, not a fallback dataset. The visible site still does not call the PGA admin/backend API while `PGA_UI_DATA_SOURCE=sheet`.
+
+`PGA_GOOGLE_SHEET_GID` is optional and should be left blank for the current uploaded Excel file unless the source is converted to a native Google Sheet and a specific `gid` is known.
