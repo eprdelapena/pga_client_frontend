@@ -21,6 +21,12 @@ export const CLUB_ASSETS: Record<string, ClubAsset> = {
   FAIRWAYS_BLUEWATERS: {clubCode:'FAIRWAYS_BLUEWATERS',slug:'fairways-bluewaters',logo:'/images/clubs/fairways-bluewaters.png'},
   FOREST_HILLS_GOLF_COUNTRY_CLUB: {clubCode:'FOREST_HILLS_GOLF_COUNTRY_CLUB',slug:'forest-hills-golf-country-club',logo:'/images/clubs/forest-hills-golf-country-club.png'},
   LUISITA_GOLF_COUNTRY_CLUB: {clubCode:'LUISITA_GOLF_COUNTRY_CLUB',slug:'luisita-golf-country-club',logo:'/images/clubs/luisita-golf-country-club.png'},
+  MAKATI_SPORTS_CLUB: {clubCode:'MAKATI_SPORTS_CLUB',slug:'makati-sports-club',logo:'/images/clubs/makati-sports-club.png'},
+  MANILA_GOLF_COUNTRY_CLUB: {clubCode:'MANILA_GOLF_COUNTRY_CLUB',slug:'manila-golf-country-club',logo:'/images/clubs/manila-golf-country-club.png'},
+  MANILA_POLO_CLUB: {clubCode:'MANILA_POLO_CLUB',slug:'manila-polo-club',logo:'/images/clubs/manila-polo-club.png'},
+  MANILA_SOUTHWOODS_GOLF_COUNTRY_CLUB: {clubCode:'MANILA_SOUTHWOODS_GOLF_COUNTRY_CLUB',slug:'manila-southwoods-golf-country-club',logo:'/images/clubs/manila-southwoods-golf-country-club.png'},
+  MONTEMAR_BEACH_CLUB: {clubCode:'MONTEMAR_BEACH_CLUB',slug:'montemar-beach-club',logo:'/images/clubs/montemar-beach-club.png'},
+  MOUNT_MALARAYAT_GOLF_COUNTRY_CLUB: {clubCode:'MOUNT_MALARAYAT_GOLF_COUNTRY_CLUB',slug:'mount-malarayat-golf-country-club',logo:'/images/clubs/mount-malarayat-golf-country-club.png'},
 };
 
 function normalizeIdentityName(value: string): string {
@@ -60,6 +66,18 @@ export const CLUB_NAME_ASSET_ALIASES: Record<string, string> = {
   [normalizeIdentityName('Forest Hills Golf and Country Club')]: 'FOREST_HILLS_GOLF_COUNTRY_CLUB',
   [normalizeIdentityName('Luisita Golf & Country Club')]: 'LUISITA_GOLF_COUNTRY_CLUB',
   [normalizeIdentityName('Luisita Golf and Country Club')]: 'LUISITA_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Makati Sports Club')]: 'MAKATI_SPORTS_CLUB',
+  [normalizeIdentityName('Makati (Sports) Club, Inc.')]: 'MAKATI_SPORTS_CLUB',
+  [normalizeIdentityName('Makati (Sports) Club Inc.')]: 'MAKATI_SPORTS_CLUB',
+  [normalizeIdentityName('Manila Golf & Country Club')]: 'MANILA_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Manila Golf and Country Club')]: 'MANILA_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Manila Polo Club')]: 'MANILA_POLO_CLUB',
+  [normalizeIdentityName('Manila Southwoods Golf & Country Club')]: 'MANILA_SOUTHWOODS_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Manila Southwoods Golf and Country Club')]: 'MANILA_SOUTHWOODS_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('The Manila Southwoods Golf & Country Club')]: 'MANILA_SOUTHWOODS_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Montemar Beach Club')]: 'MONTEMAR_BEACH_CLUB',
+  [normalizeIdentityName('Mount Malarayat Golf & Country Club')]: 'MOUNT_MALARAYAT_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Mount Malarayat Golf and Country Club')]: 'MOUNT_MALARAYAT_GOLF_COUNTRY_CLUB',
 };
 
 export function getClubAsset(clubCode: string): ClubAsset | undefined {

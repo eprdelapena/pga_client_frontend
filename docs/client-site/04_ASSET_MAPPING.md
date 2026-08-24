@@ -52,3 +52,17 @@ The user supplied `all_enhanced_club_images_updated.zip`. Existing approved proj
 | luisita_golf_club_bird_logo.png | luisita-golf-country-club.png | Luisita Golf & Country Club | LUISITA_GOLF_COUNTRY_CLUB | luisita-golf-country-club | High |
 
 The mock Club dataset already contained these five Club identities, so no mock market values or Club records were replaced. Adding the mappings makes them eligible for the visual Club Directory and Club-detail experience while preserving all pre-existing logos. Approved local visual mappings are now **16**. The ambiguous `navy_diamond_with_golden_emblem.png` remains intentionally unmapped.
+
+## Phase 5 additional supplied assets — batch 2
+The user supplied `new_enhanced_club_images_only.zip`. No existing project logo file was replaced. Six newly supplied logos were added and mapped to Club identities already present in the local mock/reference Club dataset.
+
+| Uploaded filename | Project filename | Approved visual identity | asset key | public slug | Confidence |
+|---|---|---|---|---|---|
+| makati_club_torch_crest.png | makati-sports-club.png | Makati Sports Club / Makati (Sports) Club, Inc. | MAKATI_SPORTS_CLUB | makati-sports-club | High |
+| manila_golf_sunburst_emblem.png | manila-golf-country-club.png | Manila Golf & Country Club | MANILA_GOLF_COUNTRY_CLUB | manila-golf-country-club | High |
+| maroon_horse_and_golden_horseshoe_crest.png | manila-polo-club.png | Manila Polo Club | MANILA_POLO_CLUB | manila-polo-club | High |
+| the_manila_southwoods_golf_crest.png | manila-southwoods-golf-country-club.png | Manila Southwoods Golf & Country Club | MANILA_SOUTHWOODS_GOLF_COUNTRY_CLUB | manila-southwoods-golf-country-club | High |
+| montemar_beach_club_logo.png | montemar-beach-club.png | Montemar Beach Club | MONTEMAR_BEACH_CLUB | montemar-beach-club | High |
+| mount_malarayat_golf_club_branding.png | mount-malarayat-golf-country-club.png | Mount Malarayat Golf & Country Club | MOUNT_MALARAYAT_GOLF_COUNTRY_CLUB | mount-malarayat-golf-country-club | High |
+
+The Makati crest is the Makati (Sports) Club crest used by the Club, and the horse/horseshoe/polo-mallet crest matches Manila Polo Club. Existing 16 approved assets remain unchanged. Approved local visual mappings are now **22**.

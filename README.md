@@ -36,3 +36,6 @@ Set `PGA_UI_DATA_SOURCE=live` only when you intentionally want the website to us
 ## Phase 5 design restoration
 
 The Phase 4 homepage visual composition has been restored because it is the preferred design direction. The Phase 5 functional market improvements remain: mock-first data, the supplied August 24 reference dataset, and Seller/Lessor/Buyer/Lessee market columns, filters, sorting, responsive market layouts, and Club-detail market fields. The supplied golf photo is no longer used in the hero.
+
+## Additional Club asset batch 2
+Added six newly supplied Club visual assets from `new_enhanced_club_images_only.zip` without replacing any existing project logo: Makati Sports Club, Manila Golf & Country Club, Manila Polo Club, Manila Southwoods Golf & Country Club, Montemar Beach Club, and Mount Malarayat Golf & Country Club. The local mock Club records already existed, so only visual asset files and centralized mappings were added.
