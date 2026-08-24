@@ -28,6 +28,9 @@ export function normalizeClubRecord(record: ClubRecord): InternalClubIdentity {
     slug: asset?.slug ?? generatedSlug,
     name: record.name.trim(),
     region: record.region ?? null,
+    holes: record.holes ?? null,
+    address: record.address ?? null,
+    developer: record.developer ?? null,
     shareClasses: (record.shareClasses ?? [])
       .filter((item) => item.status === 'ACTIVE')
       .map((item) => ({

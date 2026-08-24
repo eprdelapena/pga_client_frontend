@@ -5,19 +5,19 @@ import {notFound} from 'next/navigation';
 import {ClubCatalogUnavailable} from '@/components/club-catalog-state';
 import {ClubMarketCards} from '@/components/club-market-cards';
 import {Reveal} from '@/components/motion/reveal';
-import {getClubDetailResult, getClubDirectoryResult} from '@/lib/catalog';
+import {getClubDetailResult} from '@/lib/catalog';
 import {pageMetadata} from '@/lib/site';
 
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({params}: {params: Promise<{slug: string}>}): Promise<Metadata> {
   const {slug} = await params;
-  const catalog = await getClubDirectoryResult();
-  const club = catalog.clubs.find((item) => item.slug === slug);
-  if (!club) return {title: 'Club Shares', robots: {index: false, follow: false}};
+  const lookup = await getClubDetailResult(slug);
+  if (lookup.status !== 'ready') return {title: 'Club Shares', robots: {index: false, follow: false}};
+  const {club} = lookup.data;
   return pageMetadata(
     `${club.name} Shares`,
-    `View published indicative Club Share price references for ${club.name} through Prestige Golf Access & Clubshares.`,
+    `View current indicative Club Share price references for ${club.name} through Prestige Golf Access & Clubshares.`,
     `/clubs/${club.slug}`,
   );
 }
@@ -62,7 +62,9 @@ export default async function ClubDetailPage({params}: {params: Promise<{slug: s
       <Reveal><p className="eyebrow light">Club master</p><h2>What the public experience knows.</h2></Reveal>
       <Reveal delay={80}><div className="club-detail-facts">
         <div><span>Club</span><strong>{club.name}</strong></div>
-        <div><span>Region</span><strong>{club.region ?? 'Not published'}</strong></div>
+        <div><span>Location</span><strong>{club.address ?? club.region ?? 'Not published'}</strong></div>
+        {club.holes ? <div><span>Holes</span><strong>{club.holes}</strong></div> : null}
+        {club.developer ? <div><span>Developer</span><strong>{club.developer}</strong></div> : null}
         <div><span>Share classes</span><strong>{shareClasses.length ? shareClasses.join(' · ') : 'Inquire with PGA'}</strong></div>
       </div></Reveal>
     </div></section>

@@ -1,3 +1,5 @@
+export type DataSource = 'sheet' | 'live' | 'mock';
+
 export type ClubStatus = 'ACTIVE' | 'ARCHIVED';
 export type ShareClassStatus = 'ACTIVE' | 'ARCHIVED';
 
@@ -60,6 +62,8 @@ export interface PublicSharePriceRecord {
   lessorPrice?: string;
   buyingInquireOnly: boolean;
   sellingInquireOnly: boolean;
+  lessorInquireOnly?: boolean;
+  lesseeInquireOnly?: boolean;
   currency: string;
   effectiveAt: string;
   publishedAt?: string | null;
@@ -100,6 +104,9 @@ export interface PublicClub {
   slug: string;
   name: string;
   region?: PhilippineRegion | null;
+  holes?: number | null;
+  address?: string | null;
+  developer?: string | null;
   shareClasses: PublicClubShareClass[];
   logo?: string;
 }
@@ -110,7 +117,7 @@ export interface PublicClubEnvelope {
   meta: {
     correlationId: string;
     total?: number;
-    source: 'live' | 'mock';
+    source: DataSource;
     mappedVisualCount: number;
   };
 }
@@ -148,6 +155,8 @@ export interface PublicMarketPrice {
   lessorPrice?: string;
   buyingInquireOnly: boolean;
   sellingInquireOnly: boolean;
+  lessorInquireOnly?: boolean;
+  lesseeInquireOnly?: boolean;
   currency: string;
   effectiveAt: string;
   publishedAt?: string | null;
@@ -160,27 +169,29 @@ export interface PublicMarketEnvelope {
   meta: {
     correlationId: string;
     total?: number;
-    source: 'live' | 'mock';
+    source: DataSource;
     unresolvedClubCount: number;
     withoutVisualCount: number;
+    sheetAsOf?: string;
+    sheetFallback?: boolean;
   };
 }
 
 export interface ClubDirectoryResult {
   clubs: PublicClub[];
-  source: 'live' | 'mock';
+  source: DataSource;
   status: 'ready' | 'unavailable';
 }
 
 export interface ClubDetailResult {
   club: PublicClub;
   prices: PublicMarketPrice[];
-  source: 'live' | 'mock';
+  source: DataSource;
 }
 
 export type MarketLoadState =
   | {status: 'loading'}
-  | {status: 'ready'; payload: PublicMarketEnvelope; mode: 'live' | 'mock'}
-  | {status: 'empty'; mode: 'live' | 'mock'}
+  | {status: 'ready'; payload: PublicMarketEnvelope; mode: DataSource}
+  | {status: 'empty'; mode: DataSource}
   | {status: 'rate-limited'; retryAfterSeconds?: number}
   | {status: 'error'; message: string};

@@ -18,7 +18,7 @@ export function ClubCard({club, index = 0}: {club: PublicClub; index?: number}) 
         </div>
       ) : null}
       <div className="club-card-body">
-        <p className="club-location">{club.region ?? 'Region not published'}</p>
+        <p className="club-location">{club.address ?? club.region ?? 'Club information available on request'}</p>
         <h3>{club.name}</h3>
         <div className="club-share-classes">
           <span>Share classes</span>

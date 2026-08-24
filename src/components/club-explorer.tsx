@@ -14,7 +14,7 @@ export function ClubExplorer({clubs}: {clubs: PublicClub[]}) {
 
   const visible = useMemo(() => clubs.filter((club) => {
     const q = query.trim().toLowerCase();
-    const haystack = `${club.name} ${club.region ?? ''} ${club.shareClasses.map((item) => `${item.classCode} ${item.name}`).join(' ')}`.toLowerCase();
+    const haystack = `${club.name} ${club.region ?? ''} ${club.address ?? ''} ${club.developer ?? ''} ${club.shareClasses.map((item) => `${item.classCode} ${item.name}`).join(' ')}`.toLowerCase();
     const matchesSearch = !q || haystack.includes(q);
     const matchesRegion = region === 'ALL' || club.region === region;
     return Boolean(club.logo) && matchesSearch && matchesRegion;
@@ -27,20 +27,20 @@ export function ClubExplorer({clubs}: {clubs: PublicClub[]}) {
         <span aria-hidden="true">⌕</span>
         <input value={query} onChange={(event: ChangeEvent<HTMLInputElement>)=>setQuery(event.target.value)} placeholder="Search club, region, or share class"/>
       </label>
-      <label className="sort-field region-field">
+      {regions.length ? <label className="sort-field region-field">
         <span>Region</span>
         <select value={region} onChange={(event: ChangeEvent<HTMLSelectElement>)=>setRegion(event.target.value)}>
           <option value="ALL">All regions</option>
           {regions.map((value) => <option key={value} value={value}>{value}</option>)}
         </select>
-      </label>
+      </label> : null}
     </div>
     {visible.length ? (
       <div className="club-grid explorer-grid">
         {visible.map((club,index)=><ClubCard key={club.slug} club={club} index={index}/>)}
       </div>
     ) : (
-      <div className="empty-state"><span>00</span><h3>No approved clubs match that search.</h3><p>Try another club name, region, or share class.</p></div>
+      <div className="empty-state"><span>00</span><h3>No approved clubs match that search.</h3><p>Try another club name, location, or share class.</p></div>
     )}
   </>;
 }

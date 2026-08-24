@@ -75,5 +75,5 @@ export function trustedClientIpHeader(): TrustedClientIpHeader | null {
 }
 
 export function explicitDemoMode(): boolean {
-  return process.env.PGA_UI_DATA_SOURCE?.trim().toLowerCase() !== 'live';
+  return process.env.PGA_UI_DATA_SOURCE?.trim().toLowerCase() === 'mock';
 }

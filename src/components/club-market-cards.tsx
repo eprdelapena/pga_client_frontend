@@ -18,9 +18,9 @@ export function ClubMarketCards({rows}: {rows: PublicMarketPrice[]}) {
       <div className="club-market-card-head"><span>Share class</span><strong>{row.shareClassCode}</strong></div>
       <div className="club-market-values">
         <div><small>Seller</small><strong>{quote(row.sellingPrice, row.sellingInquireOnly, row.currency)}</strong></div>
-        <div><small>Lessor</small><strong>{quote(row.lessorPrice, false, row.currency)}</strong></div>
+        <div><small>Lessor</small><strong>{quote(row.lessorPrice, Boolean(row.lessorInquireOnly), row.currency)}</strong></div>
         <div><small>Buyer</small><strong>{quote(row.buyingPrice, row.buyingInquireOnly, row.currency)}</strong></div>
-        <div><small>Lessee</small><strong>{quote(row.lesseePrice, false, row.currency)}</strong></div>
+        <div><small>Lessee</small><strong>{quote(row.lesseePrice, Boolean(row.lesseeInquireOnly), row.currency)}</strong></div>
       </div>
       <footer><span>Market reference</span><time>{formatDate(row.updatedAt ?? row.publishedAt ?? row.effectiveAt)}</time></footer>
     </article>)}

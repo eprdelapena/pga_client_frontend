@@ -41,6 +41,8 @@ function normalizePriceRecord(
     lessorPrice: record.lessorPrice,
     buyingInquireOnly: record.buyingInquireOnly,
     sellingInquireOnly: record.sellingInquireOnly,
+    lessorInquireOnly: record.lessorInquireOnly,
+    lesseeInquireOnly: record.lesseeInquireOnly,
     currency: record.currency,
     effectiveAt: record.effectiveAt,
     publishedAt: record.publishedAt,

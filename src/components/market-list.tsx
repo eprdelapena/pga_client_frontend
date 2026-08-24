@@ -39,9 +39,9 @@ function latestDate(rows: PublicMarketPrice[]) {
 function MarketPriceCells({row}: {row: PublicMarketPrice}) {
   return <>
     <div className="market-value"><small>Seller</small><strong>{priceLabel(row.sellingPrice, row.sellingInquireOnly, row.currency)}</strong></div>
-    <div className="market-value"><small>Lessor</small><strong>{priceLabel(row.lessorPrice, false, row.currency)}</strong></div>
+    <div className="market-value"><small>Lessor</small><strong>{priceLabel(row.lessorPrice, Boolean(row.lessorInquireOnly), row.currency)}</strong></div>
     <div className="market-value"><small>Buyer</small><strong>{priceLabel(row.buyingPrice, row.buyingInquireOnly, row.currency)}</strong></div>
-    <div className="market-value"><small>Lessee</small><strong>{priceLabel(row.lesseePrice, false, row.currency)}</strong></div>
+    <div className="market-value"><small>Lessee</small><strong>{priceLabel(row.lesseePrice, Boolean(row.lesseeInquireOnly), row.currency)}</strong></div>
   </>;
 }
 

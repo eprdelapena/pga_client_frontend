@@ -362,3 +362,94 @@ body{background:linear-gradient(180deg,var(--paper),#f8f7f1 34%,var(--paper));}
   .market-club-group-visible .market-club-group-head{padding-inline:10px}
   .market-group-rows-visible{margin-left:10px;margin-right:10px}
 }
+
+/* ===== CONTENT-FIRST DIRECTORY / MARKET / CONTACT PAGES =====
+   These routes intentionally skip the large dark-green page hero so visitors
+   can reach the useful directory, prices, and contact details immediately. */
+.site-header.is-light-page:not(.is-scrolled){
+  background:rgba(251,250,246,.94);
+  backdrop-filter:blur(16px);
+  color:var(--ink);
+  box-shadow:0 1px 0 rgba(23,33,29,.08);
+}
+.page-content-first{
+  padding-top:calc(var(--header-h) + clamp(34px,4vw,62px));
+}
+.compact-page-intro{
+  margin-bottom:34px;
+}
+.compact-page-intro h2{
+  font-size:clamp(42px,4.8vw,68px);
+}
+.clubs-page-content .club-grid{
+  margin-top:34px;
+}
+.share-prices-content-first{
+  background:var(--paper);
+}
+.share-prices-intro{
+  margin-bottom:26px;
+}
+.market-page-context{
+  display:grid;
+  grid-template-columns:max-content minmax(0,1fr);
+  align-items:center;
+  gap:22px;
+  padding:14px 0 18px;
+  margin-bottom:18px;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.market-page-context p{
+  margin:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+.market-page-context strong{
+  color:var(--ink);
+}
+.market-source-badge.is-light{
+  background:var(--green-100);
+  border-color:#cbded2;
+  color:var(--green-950);
+}
+.market-source-badge.is-light:before{
+  box-shadow:0 0 0 5px rgba(23,98,71,.08);
+}
+.contact-content-first{
+  background:#fff;
+}
+.contact-content-first .text-link{
+  margin-top:20px;
+}
+
+@media(max-width:820px){
+  .page-content-first{
+    padding-top:calc(var(--header-h) + 30px);
+  }
+  .compact-page-intro{
+    margin-bottom:26px;
+  }
+  .market-page-context{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+}
+
+@media(max-width:560px){
+  .page-content-first{
+    padding-top:calc(var(--header-h) + 24px);
+  }
+  .compact-page-intro h2{
+    font-size:42px;
+  }
+  .market-page-context{
+    margin-bottom:12px;
+  }
+}
+
+/* Phase 05 content-first refinement: intro copy removed on Clubs, Share Prices, and Contact. */
+.contact-directory-first{
+  padding-top:calc(var(--header-h) + clamp(28px,3vw,44px));
+}

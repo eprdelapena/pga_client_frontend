@@ -71,9 +71,10 @@ export function Header() {
   }, [open]);
 
   const isActive = (href: string) => href === '/' ? pathname === '/' : pathname.startsWith(href);
+  const lightTopPage = pathname === '/clubs' || pathname === '/share-prices' || pathname === '/contact';
 
   return (
-    <header className={`site-header phase3-header ${scrolled ? 'is-scrolled' : ''}`}>
+    <header className={`site-header phase3-header ${lightTopPage ? 'is-light-page' : ''} ${scrolled ? 'is-scrolled' : ''}`}>
       <div ref={progressRef} className="scroll-progress" style={{'--scroll-progress': 0} as CSSProperties} aria-hidden="true"/>
       <div className="shell nav-shell">
         <Link href="/" className="brand" aria-label={`${COMPANY.name} home`} onClick={() => setOpen(false)}>

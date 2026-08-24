@@ -5,6 +5,7 @@ import {
   BackendRequestError,
   fetchPublicSharePrices,
 } from '@/lib/server/backend';
+import {getGoogleSheetSnapshot} from '@/lib/server/google-sheet';
 import {
   findVisibleLiveClubBySlug,
   getInternalClubCatalog,
@@ -14,6 +15,7 @@ import {normalizePublicMarket} from '@/lib/server/public-market';
 import type {
   ClubDetailResult,
   ClubDirectoryResult,
+  DataSource,
   InternalClubIdentity,
   PageEnvelope,
   PublicMarketEnvelope,
@@ -25,9 +27,16 @@ export type ClubDetailLookup =
   | {status: 'not-found'}
   | {status: 'unavailable'};
 
-export function uiDataSource(): 'live' | 'mock' {
+/**
+ * The public site now defaults to the shared Google Sheet. The existing admin
+ * API integration stays available for a later production cut-over, but it is
+ * only activated by explicitly setting PGA_UI_DATA_SOURCE=live.
+ */
+export function uiDataSource(): DataSource {
   const configured = process.env.PGA_UI_DATA_SOURCE?.trim().toLowerCase();
-  return configured === 'live' ? 'live' : 'mock';
+  if (configured === 'live') return 'live';
+  if (configured === 'mock') return 'mock';
+  return 'sheet';
 }
 
 function mockIdentities(): InternalClubIdentity[] {
@@ -43,7 +52,16 @@ function mockEnvelope(): PageEnvelope<PublicSharePriceRecord> {
 }
 
 export async function getClubDirectoryResult(): Promise<ClubDirectoryResult> {
-  if (uiDataSource() === 'mock') {
+  const source = uiDataSource();
+  if (source === 'sheet') {
+    const snapshot = await getGoogleSheetSnapshot();
+    return {
+      clubs: snapshot.clubs.map((entry) => entry.publicClub).filter((club) => Boolean(club.logo)),
+      source: 'sheet',
+      status: 'ready',
+    };
+  }
+  if (source === 'mock') {
     return {
       clubs: mockIdentities().map((entry) => entry.publicClub).filter((club) => Boolean(club.logo)),
       source: 'mock',
@@ -71,7 +89,21 @@ export async function getVisibleClubs() {
 }
 
 export async function getClubDetailResult(slug: string): Promise<ClubDetailLookup> {
-  if (uiDataSource() === 'mock') {
+  const source = uiDataSource();
+  if (source === 'sheet') {
+    const snapshot = await getGoogleSheetSnapshot();
+    const identity = snapshot.clubs.find((entry) => entry.publicClub.slug === slug);
+    if (!identity) return {status: 'not-found'};
+    return {
+      status: 'ready',
+      data: {
+        club: identity.publicClub,
+        prices: snapshot.market.data.filter((row) => row.clubSlug === slug),
+        source: 'sheet',
+      },
+    };
+  }
+  if (source === 'mock') {
     const identities = mockIdentities();
     const identity = identities.find((entry) => entry.publicClub.logo && entry.publicClub.slug === slug);
     if (!identity) return {status: 'not-found'};
@@ -110,9 +142,13 @@ export async function getClubDetailResult(slug: string): Promise<ClubDetailLooku
   }
 }
 
-
 export async function getInitialMarketResult(): Promise<{payload: PublicMarketEnvelope | null}> {
-  if (uiDataSource() === 'mock') {
+  const source = uiDataSource();
+  if (source === 'sheet') {
+    const snapshot = await getGoogleSheetSnapshot();
+    return {payload: snapshot.market};
+  }
+  if (source === 'mock') {
     const payload = normalizePublicMarket(mockEnvelope(), mockIdentities());
     return {payload: {...payload, meta: {...payload.meta, source: 'mock'}}};
   }
@@ -143,8 +179,6 @@ export async function getInitialMarketResult(): Promise<{payload: PublicMarketEn
       },
       catalog,
     );
-    // Internal server rendering never exposes raw upstream cursors. Browser
-    // pagination/retry remains purpose-specific through the protected BFF.
     return {payload: normalized};
   } catch (error) {
     if (error instanceof BackendConfigurationError || error instanceof BackendRequestError) return {payload: null};
@@ -152,15 +186,13 @@ export async function getInitialMarketResult(): Promise<{payload: PublicMarketEn
   }
 }
 
+/** Retained for the future admin/API cut-over. The current sheet mode never calls it. */
 export async function getLiveMarketForServer(queryString = ''): Promise<PublicMarketEnvelope> {
   const upstream = await fetchPublicSharePrices(queryString);
   let catalog: InternalClubIdentity[] = [];
   try {
     catalog = await getInternalClubCatalog();
   } catch (error) {
-    // Share prices are genuinely public and remain useful if the protected Club
-    // catalog credential is not available. In that case identity fields stay
-    // unresolved instead of falling back to guessed/mock names.
     if (!(error instanceof BackendConfigurationError || error instanceof BackendRequestError)) throw error;
   }
   return normalizePublicMarket(upstream, catalog);

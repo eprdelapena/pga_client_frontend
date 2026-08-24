@@ -5,7 +5,7 @@ import {MarketList} from '@/components/market-list';
 import {MarketMessage, MarketSkeleton} from '@/components/market-state';
 import {latestMarketDate, mockMarketEnvelope} from '@/lib/market-client';
 import {formatDate} from '@/lib/format';
-import type {PublicMarketEnvelope, PublicMarketPrice} from '@/types/domain';
+import type {DataSource, PublicMarketEnvelope, PublicMarketPrice} from '@/types/domain';
 
 type Mode = 'ALL' | 'SELLER' | 'LESSOR' | 'BUYER' | 'LESSEE';
 type SortMode = 'UPDATED' | 'AZ' | 'SELLER' | 'LESSOR' | 'BUYER' | 'LESSEE';
@@ -17,7 +17,7 @@ function numeric(value?: string) {
   return Number.isFinite(number) ? number : -1;
 }
 
-function useMarketData(source: 'live'|'mock', initialPayload: PublicMarketEnvelope | null = null) {
+function useMarketData(source: DataSource, initialPayload: PublicMarketEnvelope | null = null) {
   const seeded = initialPayload ?? (source === 'mock' ? mockMarketEnvelope() : null);
   const [payload, setPayload] = useState<PublicMarketEnvelope | null>(seeded);
   const [loading, setLoading] = useState(source === 'live' && !seeded);
@@ -28,6 +28,12 @@ function useMarketData(source: 'live'|'mock', initialPayload: PublicMarketEnvelo
       setPayload(mockMarketEnvelope());
       setLoading(false);
       setError(null);
+      return;
+    }
+    if (source === 'sheet') {
+      // Google Sheet data is fetched server-side. A page refresh requests the
+      // latest cached/revalidated sheet without touching the PGA admin API.
+      if (typeof window !== 'undefined') window.location.reload();
       return;
     }
     setLoading(true);
@@ -84,18 +90,18 @@ function useMarketData(source: 'live'|'mock', initialPayload: PublicMarketEnvelo
   return {payload, loading, error, reload: load};
 }
 
-export function LiveMarket({source, initialPayload = null, compact = false, limit}: {source: 'live'|'mock'; initialPayload?: PublicMarketEnvelope | null; compact?: boolean; limit?: number}) {
+export function LiveMarket({source, initialPayload = null, compact = false, limit}: {source: DataSource; initialPayload?: PublicMarketEnvelope | null; compact?: boolean; limit?: number}) {
   const {payload, loading, error, reload} = useMarketData(source, initialPayload);
   if (loading) return <MarketSkeleton compact={compact}/>;
   if (error?.kind === 'rate') return <MarketMessage kind="rate" title="Market information is receiving high traffic." copy={`Please try again shortly${error.retryAfter ? ` — about ${error.retryAfter} seconds.` : '.'}`} onRetry={() => void reload()}/>;
   if (error) return <MarketMessage kind="error" title="Market prices are temporarily unavailable." copy="We couldn't retrieve the current market reference. Please try again." onRetry={() => void reload()}/>;
   if (!payload?.data.length) return <MarketMessage kind="empty" title="No market prices are available at the moment." copy="Please check again later for club-share price references."/>;
-  const pricedRows = payload.data.filter((row) => row.sellingPrice || row.sellingInquireOnly || row.lessorPrice || row.buyingPrice || row.buyingInquireOnly || row.lesseePrice);
+  const pricedRows = payload.data.filter((row) => row.sellingPrice || row.sellingInquireOnly || row.lessorPrice || row.lessorInquireOnly || row.buyingPrice || row.buyingInquireOnly || row.lesseePrice || row.lesseeInquireOnly);
   const rows = typeof limit === 'number' ? pricedRows.slice(0, limit) : pricedRows;
   return <MarketList rows={rows} compact={compact}/>;
 }
 
-export function LiveMarketExplorer({source, initialPayload = null, initialQuery = ''}: {source: 'live'|'mock'; initialPayload?: PublicMarketEnvelope | null; initialQuery?: string}) {
+export function LiveMarketExplorer({source, initialPayload = null, initialQuery = ''}: {source: DataSource; initialPayload?: PublicMarketEnvelope | null; initialQuery?: string}) {
   const {payload, loading, error, reload} = useMarketData(source, initialPayload);
   const [query, setQuery] = useState(initialQuery);
   const [mode, setMode] = useState<Mode>('ALL');
@@ -108,9 +114,9 @@ export function LiveMarketExplorer({source, initialPayload = null, initialQuery 
       const search = `${row.clubName ?? ''} ${row.clubCode ?? ''} ${row.shareClassCode}`.toLowerCase();
       if (q && !search.includes(q)) return false;
       if (mode === 'SELLER' && !row.sellingPrice && !row.sellingInquireOnly) return false;
-      if (mode === 'LESSOR' && !row.lessorPrice) return false;
+      if (mode === 'LESSOR' && !row.lessorPrice && !row.lessorInquireOnly) return false;
       if (mode === 'BUYER' && !row.buyingPrice && !row.buyingInquireOnly) return false;
-      if (mode === 'LESSEE' && !row.lesseePrice) return false;
+      if (mode === 'LESSEE' && !row.lesseePrice && !row.lesseeInquireOnly) return false;
       return true;
     }).sort((a, b) => {
       if (sort === 'AZ') return (a.clubName ?? 'ZZZ').localeCompare(b.clubName ?? 'ZZZ');
@@ -123,12 +129,13 @@ export function LiveMarketExplorer({source, initialPayload = null, initialQuery 
   }, [payload, query, mode, sort]);
 
   const latest = payload ? latestMarketDate(payload.data) : undefined;
-  const sourceLabel = source === 'mock' ? 'Reference snapshot' : 'Published market';
+  const referenceSource = source === 'sheet' || source === 'mock';
+  const sourceLabel = referenceSource ? 'Latest Market Reference' : 'Published market';
 
   return <>
     <div className="market-live-bar">
-      <div><span className={`live-dot ${source === 'mock' ? 'is-demo' : ''}`}/><strong>{sourceLabel}</strong><small>{latest ? `As of ${formatDate(latest)}` : 'Awaiting market data'}</small></div>
-      {source === 'mock' ? <p>Hardcoded from the supplied August 24, 2026 PGA share-price workbook.</p> : payload?.meta.unresolvedClubCount ? <p>{payload.meta.unresolvedClubCount} club identit{payload.meta.unresolvedClubCount === 1 ? 'y is' : 'ies are'} temporarily unavailable in the published feed.</p> : payload?.meta.withoutVisualCount ? <p>{payload.meta.withoutVisualCount} published club{payload.meta.withoutVisualCount === 1 ? '' : 's'} are shown by name while their visual identity is unavailable.</p> : null}
+      <div><span className={`live-dot ${source === 'mock' ? 'is-demo' : ''}`}/><strong>{sourceLabel}</strong><small>{latest ? `${referenceSource ? 'Updated' : 'As of'} ${formatDate(latest)}` : 'Awaiting market data'}</small></div>
+      {referenceSource ? <p>Current indicative Club Share prices for reference. Market values may change based on availability and prevailing conditions.</p> : payload?.meta.unresolvedClubCount ? <p>{payload.meta.unresolvedClubCount} club identit{payload.meta.unresolvedClubCount === 1 ? 'y is' : 'ies are'} temporarily unavailable in the published feed.</p> : payload?.meta.withoutVisualCount ? <p>{payload.meta.withoutVisualCount} published club{payload.meta.withoutVisualCount === 1 ? '' : 's'} are shown by name while their visual identity is unavailable.</p> : null}
     </div>
     <div className="explorer-toolbar market-toolbar phase1-toolbar">
       <label className="search-field"><span className="sr-only">Search share prices</span><span aria-hidden="true">⌕</span><input value={query} onChange={(e: ChangeEvent<HTMLInputElement>)=>setQuery(e.target.value)} placeholder="Search club or share class" /></label>

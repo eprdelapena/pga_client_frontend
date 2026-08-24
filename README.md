@@ -1,24 +1,58 @@
-# PGA Clubshares Client Website — Phase 5 Validation Fix
+# PGA Clubshares Client Website — Phase 5
 
 Premium public Next.js client-facing website for **Prestige Golf Access & Clubshares, Inc.**
 
-## What changed in this validation fix
-- Keeps the Phase 4 security/SEO/production-hardening work intact.
-- Defaults the client UI to **local hardcoded reference data** unless `PGA_UI_DATA_SOURCE=live` is explicitly set.
-- Replaces the Phase 0 fictional Share Price fixture with the user-supplied **August 24, 2026 PGA Share Price Update workbook** snapshot.
-- Includes **Seller, Lessor, Buyer, and Lessee** market fields. The supplied workbook contains the Lessee column but currently has no populated Lessee values.
-- Makes Share Prices visible immediately on the homepage and keeps the full `/share-prices` page interactive with search, five market-side filters, and sorting.
-- Uses the supplied golf-course photo as the homepage hero visual while retaining the premium reveal, floating-logo, orbit, hover, and market-row motion system.
-- Keeps the visual Club Directory limited to confirmed local logo mappings; Share Price rows can still appear by Club name without a logo.
+## Current public data source
 
-## Local mock/reference run
-Create `.env.local` in the project root with at least:
+The website now defaults to PGA's shared Google Sheet for the public Club Directory and Share Price market.
 
 ```env
-PGA_UI_DATA_SOURCE=mock
+PGA_UI_DATA_SOURCE=sheet
+PGA_GOOGLE_SHEET_URL=https://docs.google.com/spreadsheets/d/1c_RiL5AWpjpXSZh7KnmfCNOGK7fLnGjF/edit?usp=sharing&ouid=114545058470474875217&rtpof=true&sd=true
+PGA_GOOGLE_SHEET_GID=0
+PGA_GOOGLE_SHEET_REVALIDATE_SECONDS=60
+PGA_GOOGLE_SHEET_TIMEOUT_MS=6000
 ```
 
-Then run:
+`sheet` is also the default when `PGA_UI_DATA_SOURCE` is omitted.
+
+The Next.js server reads the shared Sheet through Google's CSV export endpoint. `/clubs`, `/share-prices`, Club detail pages, and the homepage Club/market previews therefore do not require the PGA admin/backend API while Sheet mode is active. Browser JavaScript does not call the Google Sheet directly.
+
+The Sheet must remain readable through its shared link for live updates to appear. A bundled snapshot generated from the supplied PGA workbook is retained only as a resilience fallback if Google is temporarily unreachable or the shared CSV cannot be read. Sheet mode never falls back to the admin API.
+
+If PGA later creates a new worksheet/tab for a newer market update, set `PGA_GOOGLE_SHEET_GID` to that tab's `gid` from the Google Sheet URL.
+
+## Share Price behavior
+
+- `/share-prices` groups records by Club.
+- Every share class is visible immediately below its Club; there are no expand/collapse controls or hidden rows.
+- Seller, Lessor, Buyer, and Lessee values are supported.
+- Blank values display as `—`.
+- `Inquire` is preserved as an inquiry state rather than converted to zero.
+- Search, market-side filters, sorting, animations, and responsive layouts remain active.
+- The malformed source value `1,100,00` is intentionally ignored rather than guessed.
+
+## Club Directory behavior
+
+- Club names, share classes, holes, address, developer, and market rows are derived from the Google Sheet.
+- Approved local Club logos remain the visual-asset source of truth and are never replaced by the Sheet.
+- `/clubs` continues to show Clubs with confirmed local visual mappings; market rows for other Clubs can still appear by name in `/share-prices`.
+
+## Existing design and assets
+
+The preferred Phase 4 editorial homepage design, animations, content-first `/clubs`, `/share-prices`, and `/contact` layouts, and all previously approved Club image mappings remain intact.
+
+## Future admin API cut-over
+
+The existing LoopBack/admin API integration is intentionally preserved but dormant. It is activated only when you explicitly set:
+
+```env
+PGA_UI_DATA_SOURCE=live
+```
+
+Until then, the public website does not need `PGA_BACKEND_BASE_URL`, service-account credentials, MongoDB access, or the admin system to render Club and Share Price data.
+
+## Local run
 
 ```bash
 npm install
@@ -27,25 +61,3 @@ npm run typecheck
 npm run build
 npm run dev -- -p 3001
 ```
-
-In mock/reference mode the visible Club/Share Price experience does **not** require the LoopBack backend, MongoDB, service-account credentials, or Upstash.
-
-## Live mode later
-Set `PGA_UI_DATA_SOURCE=live` only when you intentionally want the website to use the prepared Next.js BFF → PGA backend integration. See `.env.example`, `docs/client-site/10_PRODUCTION_CHECKLIST.md`, and `docs/client-site/11_DEPLOYMENT_NOTES.md` for production configuration.
-
-## Phase 5 design restoration
-
-The Phase 4 homepage visual composition has been restored because it is the preferred design direction. The Phase 5 functional market improvements remain: mock-first data, the supplied August 24 reference dataset, and Seller/Lessor/Buyer/Lessee market columns, filters, sorting, responsive market layouts, and Club-detail market fields. The supplied golf photo is no longer used in the hero.
-
-## Additional Club asset batch 2
-Added six newly supplied Club visual assets from `new_enhanced_club_images_only.zip` without replacing any existing project logo: Makati Sports Club, Manila Golf & Country Club, Manila Polo Club, Manila Southwoods Golf & Country Club, Montemar Beach Club, and Mount Malarayat Golf & Country Club. The local mock Club records already existed, so only visual asset files and centralized mappings were added.
-
-## Additional Club asset batch 3
-Added eight newly supplied Club visual assets from `newest_enhanced_club_images_only (1).zip` without replacing any existing project logo: Orchard Golf & Country Club, Palms Country Club, Philippine Columbian Association, Pico de Loro Beach & Country Club, Quezon City Sports Club, Riviera Golf Club, Rockwell Leisure Club / The Rockwell Club, and Royal Northwoods Golf & Country Club. Their local mock Club records already existed, so only local image assets and centralized mappings/aliases were added.
-
-## Additional Club asset batch 4
-Added nine newly supplied Club visual assets from `newest_tagaytay_and_club_images_only.zip` without replacing any existing project logo: Royale Tagaytay Country Club, Sherwood Hills Golf & Country Club, Spa & Lodge at Tagaytay Highlands, Splendido Taal Golf Club, Sta. Elena Golf Club, Subic Bay Yacht Club, Summit Point Golf & Residential Club, Tagaytay Highlands International Golf Club, and Tagaytay Midlands Golf Club Inc. The local mock/reference Club records already existed, so no Club records or market values were changed; only local image assets plus centralized mappings/aliases were added.
-
-
-## Grouped Share Price directory
-The full `/share-prices` directory now groups repeated rows by Club. Each Club appears once with its logo/name, latest update context, and a compact first share-class price row. Clubs with multiple share classes can be expanded individually or with **Expand all**, preserving Seller, Lessor, Buyer, and Lessee values while substantially reducing repeated Club rows. Search, market-side filters, and sorting continue to operate before grouping. The compact homepage market preview remains unchanged.
