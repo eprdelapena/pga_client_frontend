@@ -37,7 +37,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: '#0d4b36',
-  colorScheme: 'light',
+  colorScheme: 'light dark',
 };
 
 function OrganizationJsonLd() {
@@ -64,9 +64,12 @@ function OrganizationJsonLd() {
   );
 }
 
+const THEME_BOOTSTRAP = `(function(){try{var t=localStorage.getItem('pga-theme');if(t!=='dark'&&t!=='light')t='light';document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.dataset.theme='light';document.documentElement.style.colorScheme='light';}})();`;
+
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{__html: THEME_BOOTSTRAP}}/></head>
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
         <Header/>

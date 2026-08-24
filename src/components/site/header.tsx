@@ -14,10 +14,21 @@ const links = [
   ['/contact', 'Contact'],
 ] as const;
 
+type Theme = 'light' | 'dark';
+
+function ThemeIcon({theme}: {theme: Theme}) {
+  return theme === 'dark' ? (
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 15.2A8.7 8.7 0 0 1 8.8 3.7 8.7 8.7 0 1 0 20.3 15.2Z"/></svg>
+  ) : (
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.41M17.66 6.34l1.41-1.41"/></svg>
+  );
+}
+
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [theme, setTheme] = useState<Theme>('light');
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
 
@@ -70,6 +81,21 @@ export function Header() {
     };
   }, [open]);
 
+  useEffect(() => {
+    const current: Theme = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+    setTheme(current);
+  }, []);
+
+  const toggleTheme = () => {
+    const next: Theme = theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    document.documentElement.style.colorScheme = next;
+    try { localStorage.setItem('pga-theme', next); } catch {}
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    themeMeta?.setAttribute('content', next === 'dark' ? '#07110d' : '#0d4b36');
+    setTheme(next);
+  };
+
   const isActive = (href: string) => href === '/' ? pathname === '/' : pathname.startsWith(href);
   const lightTopPage = pathname === '/clubs' || pathname === '/share-prices' || pathname === '/contact';
 
@@ -95,7 +121,13 @@ export function Header() {
         <nav className="desktop-nav" aria-label="Primary navigation">
           {links.map(([href, label]) => <Link key={href} className={isActive(href) ? 'is-active' : ''} aria-current={isActive(href) ? 'page' : undefined} href={href}>{label}</Link>)}
         </nav>
-        <Link className="nav-cta desktop-cta" href="/share-prices">View Market <span aria-hidden="true">↗</span></Link>
+        <div className="desktop-actions">
+          <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'night'} mode`} title={`Switch to ${theme === 'dark' ? 'light' : 'night'} mode`}>
+            <span className="theme-toggle-icon"><ThemeIcon theme={theme === 'dark' ? 'light' : 'dark'}/></span>
+            <span className="theme-toggle-label">{theme === 'dark' ? 'Light' : 'Night'}</span>
+          </button>
+          <Link className="nav-cta desktop-cta" href="/share-prices">View Market <span aria-hidden="true">↗</span></Link>
+        </div>
         <button ref={menuButtonRef} className={`menu-button ${open ? 'is-open' : ''}`} aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen(v => !v)}>
           <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span><i/><i/>
         </button>
@@ -110,6 +142,13 @@ export function Header() {
               </Link>
             ))}
           </nav>
+          <div className="mobile-theme-row">
+            <span>Appearance</span>
+            <button className="theme-toggle is-mobile" type="button" onClick={toggleTheme} tabIndex={open ? 0 : -1} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'night'} mode`}>
+              <span className="theme-toggle-icon"><ThemeIcon theme={theme === 'dark' ? 'light' : 'dark'}/></span>
+              <span className="theme-toggle-label">{theme === 'dark' ? 'Light mode' : 'Night mode'}</span>
+            </button>
+          </div>
           <div className="mobile-menu-contact">
             <p className="eyebrow light">Direct line</p>
             <a tabIndex={open ? 0 : -1} href={COMPANY.phone.globe.href}>{COMPANY.phone.globe.label}</a>
