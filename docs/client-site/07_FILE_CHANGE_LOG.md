@@ -68,3 +68,9 @@ No existing PGA backend or admin frontend file was modified.
 - Every share class now renders immediately as its own visible row with Seller, Lessor, Buyer, and Lessee values.
 - Kept search, market-side filters, sorting, Club links, logo mappings, responsive layouts, and existing animations.
 - Added a compact inline Share Class badge and purpose-built mobile price cards without any expand/collapse interaction.
+
+## Club detail market split — Share Rights / Playing Rights
+- Redesigned `src/app/clubs/[slug]/page.tsx` hero market cues and Club market copy.
+- Redesigned `src/components/club-market-cards.tsx` so every share class visibly separates ownership transactions (Seller/Buyer) from playing-access transactions (Lessor/Lessee).
+- Added responsive, reduced-motion-safe hover, stagger, flow-line, orbit, and panel animations in `src/app/globals.css`.
+- No changes to Google Sheet source, no-cache behavior, API contracts, or existing Club asset mappings.

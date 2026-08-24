@@ -49,13 +49,15 @@ export default async function ClubDetailPage({params}: {params: Promise<{slug: s
         </Reveal>
         <Reveal delay={120} className="club-detail-logo-panel">
           {club.logo ? <div className="club-detail-logo"><Image src={club.logo} alt={`${club.name} logo`} fill sizes="(max-width: 820px) 60vw, 360px"/></div> : null}
-          <div className="club-detail-marker"><span>02</span><p>{source === 'mock' ? 'Explicit demo catalog' : 'Current Club information'}<br/>Approved frontend visual</p></div>
+          <div className="club-detail-rights-badge share-rights-badge" aria-hidden="true"><span>01</span><strong>Share Rights</strong><small>Buy · Sell</small></div>
+          <div className="club-detail-rights-badge playing-rights-badge" aria-hidden="true"><span>02</span><strong>Playing Rights</strong><small>Lessor · Lessee</small></div>
+          <div className="club-detail-marker"><span>03</span><p>{source === 'mock' ? 'Explicit demo catalog' : 'Current Club information'}<br/>Approved frontend visual</p></div>
         </Reveal>
       </div>
     </section>
 
     <section className="section club-detail-market"><div className="shell">
-      <Reveal><div className="club-market-intro"><div><p className="eyebrow">Current indicative market</p><h2>Share references,<br/><em>presented with clarity.</em></h2></div><div><p>Published prices are indicative and may change. “Inquire” means PGA has intentionally not published a numeric buying or selling value; it does not mean zero.</p><span>{prices.length.toString().padStart(2,'0')} <small>published record{prices.length === 1 ? '' : 's'}</small></span></div></div></Reveal>
+      <Reveal><div className="club-market-intro club-rights-intro"><div><p className="eyebrow">Current indicative market</p><h2>Two markets.<br/><em>One clear view.</em></h2></div><div><p>Share Rights and Playing Rights are shown separately so ownership transactions and playing-access transactions are easy to compare at a glance. “Inquire” means a numeric reference is intentionally not published; it does not mean zero.</p><span>{prices.length.toString().padStart(2,'0')} <small>share class{prices.length === 1 ? '' : 'es'}</small></span></div></div></Reveal>
       <Reveal delay={90}><ClubMarketCards rows={prices}/></Reveal>
     </div></section>
 

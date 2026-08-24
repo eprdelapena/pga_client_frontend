@@ -75,6 +75,17 @@ export function Header() {
 
   return (
     <header className={`site-header phase3-header ${lightTopPage ? 'is-light-page' : ''} ${scrolled ? 'is-scrolled' : ''}`}>
+      <div className="contact-topbar" aria-label="PGA direct contact channels">
+        <div className="shell contact-topbar-inner">
+          <span className="contact-topbar-kicker">Direct company channels</span>
+          <div className="contact-topbar-links">
+            <a href={`mailto:${COMPANY.emails[0]}`}><span>Email</span><strong>{COMPANY.emails[0]}</strong></a>
+            <a href={COMPANY.phone.landline.href}><span>Landline</span><strong>{COMPANY.phone.landline.label}</strong></a>
+            <a href={COMPANY.phone.smart.href}><span>Smart</span><strong>{COMPANY.phone.smart.label}</strong></a>
+            <a href={COMPANY.phone.globe.href}><span>Globe</span><strong>{COMPANY.phone.globe.label}</strong></a>
+          </div>
+        </div>
+      </div>
       <div ref={progressRef} className="scroll-progress" style={{'--scroll-progress': 0} as CSSProperties} aria-hidden="true"/>
       <div className="shell nav-shell">
         <Link href="/" className="brand" aria-label={`${COMPANY.name} home`} onClick={() => setOpen(false)}>
