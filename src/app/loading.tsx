@@ -1,0 +1,1 @@
+export default function Loading(){return <div className="route-loading" role="status" aria-live="polite"><div className="loading-mark"><i/><i/><i/></div><span>Preparing the clubshares view…</span></div>}

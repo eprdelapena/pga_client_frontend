@@ -1,0 +1,12 @@
+import {ImageResponse} from 'next/og';
+
+export const runtime = 'edge';
+export const size = {width: 64, height: 64};
+export const contentType = 'image/png';
+
+export default function Icon() {
+  return new ImageResponse(
+    <div style={{width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0b3d2d', color: '#f6f2e8', fontSize: 20, letterSpacing: 1.5, fontFamily: 'Arial, sans-serif'}}>PGA</div>,
+    size,
+  );
+}
