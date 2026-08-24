@@ -46,3 +46,6 @@ Added eight newly supplied Club visual assets from `newest_enhanced_club_images_
 ## Additional Club asset batch 4
 Added nine newly supplied Club visual assets from `newest_tagaytay_and_club_images_only.zip` without replacing any existing project logo: Royale Tagaytay Country Club, Sherwood Hills Golf & Country Club, Spa & Lodge at Tagaytay Highlands, Splendido Taal Golf Club, Sta. Elena Golf Club, Subic Bay Yacht Club, Summit Point Golf & Residential Club, Tagaytay Highlands International Golf Club, and Tagaytay Midlands Golf Club Inc. The local mock/reference Club records already existed, so no Club records or market values were changed; only local image assets plus centralized mappings/aliases were added.
 
+
+## Grouped Share Price directory
+The full `/share-prices` directory now groups repeated rows by Club. Each Club appears once with its logo/name, latest update context, and a compact first share-class price row. Clubs with multiple share classes can be expanded individually or with **Expand all**, preserving Seller, Lessor, Buyer, and Lessee values while substantially reducing repeated Club rows. Search, market-side filters, and sorting continue to operate before grouping. The compact homepage market preview remains unchanged.

@@ -44,6 +44,10 @@ export const CLUB_ASSETS: Record<string, ClubAsset> = {
   SUMMIT_POINT_GOLF_RESIDENTIAL_CLUB: {clubCode:'SUMMIT_POINT_GOLF_RESIDENTIAL_CLUB',slug:'summit-point-golf-residential-club',logo:'/images/clubs/summit-point-golf-residential-club.png'},
   TAGAYTAY_HIGHLANDS_INTERNATIONAL_GOLF_CLUB: {clubCode:'TAGAYTAY_HIGHLANDS_INTERNATIONAL_GOLF_CLUB',slug:'tagaytay-highlands-international-golf-club',logo:'/images/clubs/tagaytay-highlands-international-golf-club.png'},
   TAGAYTAY_MIDLANDS_GOLF_CLUB_INC: {clubCode:'TAGAYTAY_MIDLANDS_GOLF_CLUB_INC',slug:'tagaytay-midlands-golf-club',logo:'/images/clubs/tagaytay-midlands-golf-club.png'},
+  VALLE_VERDE_COUNTRY_CLUB: {clubCode:'VALLE_VERDE_COUNTRY_CLUB',slug:'valle-verde-country-club',logo:'/images/clubs/valle-verde-country-club.png'},
+  VALLEY_GOLF_COUNTRY_CLUB: {clubCode:'VALLEY_GOLF_COUNTRY_CLUB',slug:'valley-golf-country-club',logo:'/images/clubs/valley-golf-country-club.png'},
+  VINEYARD_GOLF_CLUB: {clubCode:'VINEYARD_GOLF_CLUB',slug:'vineyard-golf-club',logo:'/images/clubs/vineyard-golf-club.png'},
+  WACK_WACK_GOLF_COUNTRY_CLUB: {clubCode:'WACK_WACK_GOLF_COUNTRY_CLUB',slug:'wack-wack-golf-country-club',logo:'/images/clubs/wack-wack-golf-country-club.png'},
 };
 
 function normalizeIdentityName(value: string): string {
@@ -133,6 +137,12 @@ export const CLUB_NAME_ASSET_ALIASES: Record<string, string> = {
   [normalizeIdentityName('Tagaytay Midlands Golf Club Inc.')]: 'TAGAYTAY_MIDLANDS_GOLF_CLUB_INC',
   [normalizeIdentityName('Tagaytay Midlands Golf Club, Inc.')]: 'TAGAYTAY_MIDLANDS_GOLF_CLUB_INC',
   [normalizeIdentityName('Tagaytay Midlands Golf Club')]: 'TAGAYTAY_MIDLANDS_GOLF_CLUB_INC',
+  [normalizeIdentityName('Valle Verde Country Club')]: 'VALLE_VERDE_COUNTRY_CLUB',
+  [normalizeIdentityName('Valley Golf & Country Club')]: 'VALLEY_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Valley Golf and Country Club')]: 'VALLEY_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Vineyard Golf Club')]: 'VINEYARD_GOLF_CLUB',
+  [normalizeIdentityName('Wack Wack Golf & Country Club')]: 'WACK_WACK_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Wack Wack Golf and Country Club')]: 'WACK_WACK_GOLF_COUNTRY_CLUB',
 };
 
 export function getClubAsset(clubCode: string): ClubAsset | undefined {

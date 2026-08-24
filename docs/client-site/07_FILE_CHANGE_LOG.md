@@ -55,3 +55,10 @@ No existing PGA backend or admin frontend file was modified.
 - Updated `src/config/club-assets.ts` with 8 approved mappings and reviewed exact-name aliases.
 - Did not replace or modify any pre-existing Club logo asset.
 - No mock Club records, market values, routes, API behavior, visual layout, or animations were changed.
+
+### Phase 5 grouped Share Price directory refinement
+- Updated `src/components/market-list.tsx` so the full `/share-prices` experience groups share classes under one Club identity instead of repeating the same Club on every row.
+- Added per-Club expand/collapse and global Expand all / Collapse all controls; single-share-class Clubs remain fully visible without an extra interaction.
+- Preserved Seller, Lessor, Buyer, Lessee, search, filters, sorting, Club links, and compact homepage market behavior.
+- Added responsive grouped-market styling in `src/app/globals.css`, including desktop market matrices and mobile 2×2 price cards.
+- Updated `/share-prices` explanatory copy to reflect the grouped interaction.

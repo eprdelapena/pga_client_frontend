@@ -100,3 +100,16 @@ The user supplied `newest_tagaytay_and_club_images_only.zip`. No existing projec
 
 The mock Club dataset already contained all nine Club identities, so no market values or Club records were replaced. Existing 30 approved visual assets remain unchanged. Approved local visual mappings are now **39**. The older ambiguous `navy_diamond_with_golden_emblem.png` remains intentionally unmapped.
 
+
+
+## Phase 5 additional supplied assets — batch 5
+The user supplied `new_wack_vineyard_valley_valle_verde_only(1).zip`. Existing project logo files were intentionally left unchanged. Four newly supplied visuals were added and mapped to Club identities already present in the local mock/reference Club dataset.
+
+| Uploaded filename | Project filename | Approved visual identity | asset key | public slug | Confidence |
+|---|---|---|---|---|---|
+| wack_wack_golf_club_emblem.png | wack-wack-golf-country-club.png | Wack Wack Golf & Country Club | WACK_WACK_GOLF_COUNTRY_CLUB | wack-wack-golf-country-club | High |
+| vineyard_golf_club_emblem.png | vineyard-golf-club.png | Vineyard Golf Club | VINEYARD_GOLF_CLUB | vineyard-golf-club | High |
+| valley_golf_emblem_logo.png | valley-golf-country-club.png | Valley Golf & Country Club | VALLEY_GOLF_COUNTRY_CLUB | valley-golf-country-club | High |
+| valle_verde_country_club_emblem.png | valle-verde-country-club.png | Valle Verde Country Club | VALLE_VERDE_COUNTRY_CLUB | valle-verde-country-club | High |
+
+The mock Club dataset already contained all four Club identities, so no market values or Club records were replaced. Existing 39 approved visual assets remain unchanged. Approved local visual mappings are now **43**.
