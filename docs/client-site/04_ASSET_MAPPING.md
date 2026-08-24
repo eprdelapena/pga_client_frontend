@@ -82,3 +82,21 @@ The user supplied `newest_enhanced_club_images_only (1).zip`. No existing projec
 | royal_northwoods_golf_club_crest.png | royal-northwoods-golf-country-club.png | Royal Northwoods Golf & Country Club | ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB | royal-northwoods-golf-country-club | High |
 
 The mock Club dataset already contained all eight Club identities, so no market values or Club records were replaced. Existing 22 approved visual assets remain unchanged. Approved local visual mappings are now **30**. The older ambiguous `navy_diamond_with_golden_emblem.png` remains intentionally unmapped.
+
+## Phase 5 additional supplied assets — batch 4
+The user supplied `newest_tagaytay_and_club_images_only.zip`. No existing project logo file was replaced. Nine newly supplied visuals were added and mapped to Club identities already present in the local mock/reference Club dataset.
+
+| Uploaded filename | Project filename | Approved visual identity | asset key | public slug | Confidence |
+|---|---|---|---|---|---|
+| royale_tagaytay_country_club_crest.png | royale-tagaytay-country-club.png | Royale Tagaytay Country Club | ROYALE_TAGAYTAY_COUNTRY_CLUB | royale-tagaytay-country-club | High |
+| sherwood_hills_golf_club_emblem.png | sherwood-hills-golf-country-club.png | Sherwood Hills Golf & Country Club | SHERWOOD_HILLS_GOLF_COUNTRY_CLUB | sherwood-hills-golf-country-club | High |
+| the_spa_lodge_tagaytay_sign.png | spa-lodge-at-tagaytay-highlands.png | Spa & Lodge at Tagaytay Highlands | SPA_LODGE_AT_TAGAYTAY_HIGHLANDS | spa-lodge-at-tagaytay-highlands | High |
+| splendido_taal_golf_club_logo.png | splendido-taal-golf-club.png | Splendido Taal Golf Club | SPLENDIDO_TAAL_GOLF_CLUB | splendido-taal-golf-club | High |
+| sta._elena_golf_club_emblem.png | sta-elena-golf-club.png | Sta. Elena Golf Club | STA_ELENA_GOLF_CLUB | sta-elena-golf-club | High |
+| subic_bay_yacht_club_emblem.png | subic-bay-yacht-club.png | Subic Bay Yacht Club | SUBIC_BAY_YACHT_CLUB | subic-bay-yacht-club | High |
+| summit_point_golf_club_logo.png | summit-point-golf-residential-club.png | Summit Point Golf & Residential Club | SUMMIT_POINT_GOLF_RESIDENTIAL_CLUB | summit-point-golf-residential-club | High |
+| tagaytay_highlands_golf_club_emblem.png | tagaytay-highlands-international-golf-club.png | Tagaytay Highlands International Golf Club | TAGAYTAY_HIGHLANDS_INTERNATIONAL_GOLF_CLUB | tagaytay-highlands-international-golf-club | High |
+| tagaytay_midlands_golf_club_emblem.png | tagaytay-midlands-golf-club.png | Tagaytay Midlands Golf Club Inc. | TAGAYTAY_MIDLANDS_GOLF_CLUB_INC | tagaytay-midlands-golf-club | High |
+
+The mock Club dataset already contained all nine Club identities, so no market values or Club records were replaced. Existing 30 approved visual assets remain unchanged. Approved local visual mappings are now **39**. The older ambiguous `navy_diamond_with_golden_emblem.png` remains intentionally unmapped.
+

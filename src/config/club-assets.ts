@@ -35,6 +35,15 @@ export const CLUB_ASSETS: Record<string, ClubAsset> = {
   RIVIERA_GOLF_CLUB: {clubCode:'RIVIERA_GOLF_CLUB',slug:'riviera-golf-club',logo:'/images/clubs/riviera-golf-club.png'},
   ROCKWELL_LEISURE_CLUB: {clubCode:'ROCKWELL_LEISURE_CLUB',slug:'rockwell-leisure-club',logo:'/images/clubs/rockwell-leisure-club.png'},
   ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB: {clubCode:'ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB',slug:'royal-northwoods-golf-country-club',logo:'/images/clubs/royal-northwoods-golf-country-club.png'},
+  ROYALE_TAGAYTAY_COUNTRY_CLUB: {clubCode:'ROYALE_TAGAYTAY_COUNTRY_CLUB',slug:'royale-tagaytay-country-club',logo:'/images/clubs/royale-tagaytay-country-club.png'},
+  SHERWOOD_HILLS_GOLF_COUNTRY_CLUB: {clubCode:'SHERWOOD_HILLS_GOLF_COUNTRY_CLUB',slug:'sherwood-hills-golf-country-club',logo:'/images/clubs/sherwood-hills-golf-country-club.png'},
+  SPA_LODGE_AT_TAGAYTAY_HIGHLANDS: {clubCode:'SPA_LODGE_AT_TAGAYTAY_HIGHLANDS',slug:'spa-lodge-at-tagaytay-highlands',logo:'/images/clubs/spa-lodge-at-tagaytay-highlands.png'},
+  SPLENDIDO_TAAL_GOLF_CLUB: {clubCode:'SPLENDIDO_TAAL_GOLF_CLUB',slug:'splendido-taal-golf-club',logo:'/images/clubs/splendido-taal-golf-club.png'},
+  STA_ELENA_GOLF_CLUB: {clubCode:'STA_ELENA_GOLF_CLUB',slug:'sta-elena-golf-club',logo:'/images/clubs/sta-elena-golf-club.png'},
+  SUBIC_BAY_YACHT_CLUB: {clubCode:'SUBIC_BAY_YACHT_CLUB',slug:'subic-bay-yacht-club',logo:'/images/clubs/subic-bay-yacht-club.png'},
+  SUMMIT_POINT_GOLF_RESIDENTIAL_CLUB: {clubCode:'SUMMIT_POINT_GOLF_RESIDENTIAL_CLUB',slug:'summit-point-golf-residential-club',logo:'/images/clubs/summit-point-golf-residential-club.png'},
+  TAGAYTAY_HIGHLANDS_INTERNATIONAL_GOLF_CLUB: {clubCode:'TAGAYTAY_HIGHLANDS_INTERNATIONAL_GOLF_CLUB',slug:'tagaytay-highlands-international-golf-club',logo:'/images/clubs/tagaytay-highlands-international-golf-club.png'},
+  TAGAYTAY_MIDLANDS_GOLF_CLUB_INC: {clubCode:'TAGAYTAY_MIDLANDS_GOLF_CLUB_INC',slug:'tagaytay-midlands-golf-club',logo:'/images/clubs/tagaytay-midlands-golf-club.png'},
 };
 
 function normalizeIdentityName(value: string): string {
@@ -105,6 +114,25 @@ export const CLUB_NAME_ASSET_ALIASES: Record<string, string> = {
   [normalizeIdentityName('Royal Northwoods Golf and Country Club')]: 'ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB',
   [normalizeIdentityName('Royal Northwoods Golf Club Inc.')]: 'ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB',
   [normalizeIdentityName('Royal Northwoods Golf Club, Inc.')]: 'ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Royale Tagaytay Country Club')]: 'ROYALE_TAGAYTAY_COUNTRY_CLUB',
+  [normalizeIdentityName('Sherwood Hills Golf & Country Club')]: 'SHERWOOD_HILLS_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Sherwood Hills Golf and Country Club')]: 'SHERWOOD_HILLS_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Sherwood Hills Golf Club')]: 'SHERWOOD_HILLS_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Spa & Lodge at Tagaytay Highlands')]: 'SPA_LODGE_AT_TAGAYTAY_HIGHLANDS',
+  [normalizeIdentityName('Spa and Lodge at Tagaytay Highlands')]: 'SPA_LODGE_AT_TAGAYTAY_HIGHLANDS',
+  [normalizeIdentityName('The Spa & Lodge at Tagaytay Highlands')]: 'SPA_LODGE_AT_TAGAYTAY_HIGHLANDS',
+  [normalizeIdentityName('Splendido Taal Golf Club')]: 'SPLENDIDO_TAAL_GOLF_CLUB',
+  [normalizeIdentityName('Sta. Elena Golf Club')]: 'STA_ELENA_GOLF_CLUB',
+  [normalizeIdentityName('Santa Elena Golf Club')]: 'STA_ELENA_GOLF_CLUB',
+  [normalizeIdentityName('Subic Bay Yacht Club')]: 'SUBIC_BAY_YACHT_CLUB',
+  [normalizeIdentityName('Summit Point Golf & Residential Club')]: 'SUMMIT_POINT_GOLF_RESIDENTIAL_CLUB',
+  [normalizeIdentityName('Summit Point Golf and Residential Club')]: 'SUMMIT_POINT_GOLF_RESIDENTIAL_CLUB',
+  [normalizeIdentityName('Summit Point Golf Club')]: 'SUMMIT_POINT_GOLF_RESIDENTIAL_CLUB',
+  [normalizeIdentityName('Tagaytay Highlands International Golf Club')]: 'TAGAYTAY_HIGHLANDS_INTERNATIONAL_GOLF_CLUB',
+  [normalizeIdentityName('Tagaytay Highlands Golf Club')]: 'TAGAYTAY_HIGHLANDS_INTERNATIONAL_GOLF_CLUB',
+  [normalizeIdentityName('Tagaytay Midlands Golf Club Inc.')]: 'TAGAYTAY_MIDLANDS_GOLF_CLUB_INC',
+  [normalizeIdentityName('Tagaytay Midlands Golf Club, Inc.')]: 'TAGAYTAY_MIDLANDS_GOLF_CLUB_INC',
+  [normalizeIdentityName('Tagaytay Midlands Golf Club')]: 'TAGAYTAY_MIDLANDS_GOLF_CLUB_INC',
 };
 
 export function getClubAsset(clubCode: string): ClubAsset | undefined {

@@ -42,3 +42,7 @@ Added six newly supplied Club visual assets from `new_enhanced_club_images_only.
 
 ## Additional Club asset batch 3
 Added eight newly supplied Club visual assets from `newest_enhanced_club_images_only (1).zip` without replacing any existing project logo: Orchard Golf & Country Club, Palms Country Club, Philippine Columbian Association, Pico de Loro Beach & Country Club, Quezon City Sports Club, Riviera Golf Club, Rockwell Leisure Club / The Rockwell Club, and Royal Northwoods Golf & Country Club. Their local mock Club records already existed, so only local image assets and centralized mappings/aliases were added.
+
+## Additional Club asset batch 4
+Added nine newly supplied Club visual assets from `newest_tagaytay_and_club_images_only.zip` without replacing any existing project logo: Royale Tagaytay Country Club, Sherwood Hills Golf & Country Club, Spa & Lodge at Tagaytay Highlands, Splendido Taal Golf Club, Sta. Elena Golf Club, Subic Bay Yacht Club, Summit Point Golf & Residential Club, Tagaytay Highlands International Golf Club, and Tagaytay Midlands Golf Club Inc. The local mock/reference Club records already existed, so no Club records or market values were changed; only local image assets plus centralized mappings/aliases were added.
+
