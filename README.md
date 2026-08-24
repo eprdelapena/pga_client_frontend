@@ -39,3 +39,6 @@ The Phase 4 homepage visual composition has been restored because it is the pref
 
 ## Additional Club asset batch 2
 Added six newly supplied Club visual assets from `new_enhanced_club_images_only.zip` without replacing any existing project logo: Makati Sports Club, Manila Golf & Country Club, Manila Polo Club, Manila Southwoods Golf & Country Club, Montemar Beach Club, and Mount Malarayat Golf & Country Club. The local mock Club records already existed, so only visual asset files and centralized mappings were added.
+
+## Additional Club asset batch 3
+Added eight newly supplied Club visual assets from `newest_enhanced_club_images_only (1).zip` without replacing any existing project logo: Orchard Golf & Country Club, Palms Country Club, Philippine Columbian Association, Pico de Loro Beach & Country Club, Quezon City Sports Club, Riviera Golf Club, Rockwell Leisure Club / The Rockwell Club, and Royal Northwoods Golf & Country Club. Their local mock Club records already existed, so only local image assets and centralized mappings/aliases were added.

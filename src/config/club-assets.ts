@@ -27,6 +27,14 @@ export const CLUB_ASSETS: Record<string, ClubAsset> = {
   MANILA_SOUTHWOODS_GOLF_COUNTRY_CLUB: {clubCode:'MANILA_SOUTHWOODS_GOLF_COUNTRY_CLUB',slug:'manila-southwoods-golf-country-club',logo:'/images/clubs/manila-southwoods-golf-country-club.png'},
   MONTEMAR_BEACH_CLUB: {clubCode:'MONTEMAR_BEACH_CLUB',slug:'montemar-beach-club',logo:'/images/clubs/montemar-beach-club.png'},
   MOUNT_MALARAYAT_GOLF_COUNTRY_CLUB: {clubCode:'MOUNT_MALARAYAT_GOLF_COUNTRY_CLUB',slug:'mount-malarayat-golf-country-club',logo:'/images/clubs/mount-malarayat-golf-country-club.png'},
+  ORCHARD_GOLF_COUNTRY_CLUB: {clubCode:'ORCHARD_GOLF_COUNTRY_CLUB',slug:'orchard-golf-country-club',logo:'/images/clubs/orchard-golf-country-club.png'},
+  PALMS_COUNTRY_CLUB: {clubCode:'PALMS_COUNTRY_CLUB',slug:'palms-country-club',logo:'/images/clubs/palms-country-club.png'},
+  PHILIPPINE_COLUMBIAN_ASSOCIATION: {clubCode:'PHILIPPINE_COLUMBIAN_ASSOCIATION',slug:'philippine-columbian-association',logo:'/images/clubs/philippine-columbian-association.png'},
+  PICO_DE_LORO_BEACH_COUNTRY_CLUB: {clubCode:'PICO_DE_LORO_BEACH_COUNTRY_CLUB',slug:'pico-de-loro-beach-country-club',logo:'/images/clubs/pico-de-loro-beach-country-club.png'},
+  QUEZON_CITY_SPORTS_CLUB: {clubCode:'QUEZON_CITY_SPORTS_CLUB',slug:'quezon-city-sports-club',logo:'/images/clubs/quezon-city-sports-club.png'},
+  RIVIERA_GOLF_CLUB: {clubCode:'RIVIERA_GOLF_CLUB',slug:'riviera-golf-club',logo:'/images/clubs/riviera-golf-club.png'},
+  ROCKWELL_LEISURE_CLUB: {clubCode:'ROCKWELL_LEISURE_CLUB',slug:'rockwell-leisure-club',logo:'/images/clubs/rockwell-leisure-club.png'},
+  ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB: {clubCode:'ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB',slug:'royal-northwoods-golf-country-club',logo:'/images/clubs/royal-northwoods-golf-country-club.png'},
 };
 
 function normalizeIdentityName(value: string): string {
@@ -78,6 +86,25 @@ export const CLUB_NAME_ASSET_ALIASES: Record<string, string> = {
   [normalizeIdentityName('Montemar Beach Club')]: 'MONTEMAR_BEACH_CLUB',
   [normalizeIdentityName('Mount Malarayat Golf & Country Club')]: 'MOUNT_MALARAYAT_GOLF_COUNTRY_CLUB',
   [normalizeIdentityName('Mount Malarayat Golf and Country Club')]: 'MOUNT_MALARAYAT_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Orchard Golf & Country Club')]: 'ORCHARD_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Orchard Golf and Country Club')]: 'ORCHARD_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('The Orchard Golf & Country Club')]: 'ORCHARD_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('The Orchard Golf and Country Club')]: 'ORCHARD_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Palms Country Club')]: 'PALMS_COUNTRY_CLUB',
+  [normalizeIdentityName('The Palms Country Club')]: 'PALMS_COUNTRY_CLUB',
+  [normalizeIdentityName('Philippine Columbian Association')]: 'PHILIPPINE_COLUMBIAN_ASSOCIATION',
+  [normalizeIdentityName('Pico de Loro Beach & Country Club')]: 'PICO_DE_LORO_BEACH_COUNTRY_CLUB',
+  [normalizeIdentityName('Pico de Loro Beach and Country Club')]: 'PICO_DE_LORO_BEACH_COUNTRY_CLUB',
+  [normalizeIdentityName('Quezon City Sports Club')]: 'QUEZON_CITY_SPORTS_CLUB',
+  [normalizeIdentityName('Riviera Golf Club')]: 'RIVIERA_GOLF_CLUB',
+  [normalizeIdentityName('Riviera Golf Club, Inc.')]: 'RIVIERA_GOLF_CLUB',
+  [normalizeIdentityName('Rockwell Leisure Club')]: 'ROCKWELL_LEISURE_CLUB',
+  [normalizeIdentityName('The Rockwell Club')]: 'ROCKWELL_LEISURE_CLUB',
+  [normalizeIdentityName('The Rockwell Leisure Club')]: 'ROCKWELL_LEISURE_CLUB',
+  [normalizeIdentityName('Royal Northwoods Golf & Country Club')]: 'ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Royal Northwoods Golf and Country Club')]: 'ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Royal Northwoods Golf Club Inc.')]: 'ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB',
+  [normalizeIdentityName('Royal Northwoods Golf Club, Inc.')]: 'ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB',
 };
 
 export function getClubAsset(clubCode: string): ClubAsset | undefined {

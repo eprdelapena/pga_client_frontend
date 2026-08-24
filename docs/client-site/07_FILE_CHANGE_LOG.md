@@ -49,3 +49,9 @@ No existing PGA backend or admin frontend file was modified.
 - Restored `src/app/page.tsx` to the Phase 4 homepage composition.
 - Restored the Phase 4 `src/app/globals.css` visual baseline and retained only the responsive six-column market layout required by Seller/Lessor/Buyer/Lessee data.
 - Removed `src/components/hero-market-snapshot.tsx` and the Phase 5 hero photo asset because the previous hero design is preferred.
+
+## Phase 5 asset-only update — batch 3
+- Added 8 new files under `public/images/clubs/` from `newest_enhanced_club_images_only (1).zip`.
+- Updated `src/config/club-assets.ts` with 8 approved mappings and reviewed exact-name aliases.
+- Did not replace or modify any pre-existing Club logo asset.
+- No mock Club records, market values, routes, API behavior, visual layout, or animations were changed.

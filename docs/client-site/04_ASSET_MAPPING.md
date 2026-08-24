@@ -66,3 +66,19 @@ The user supplied `new_enhanced_club_images_only.zip`. No existing project logo 
 | mount_malarayat_golf_club_branding.png | mount-malarayat-golf-country-club.png | Mount Malarayat Golf & Country Club | MOUNT_MALARAYAT_GOLF_COUNTRY_CLUB | mount-malarayat-golf-country-club | High |
 
 The Makati crest is the Makati (Sports) Club crest used by the Club, and the horse/horseshoe/polo-mallet crest matches Manila Polo Club. Existing 16 approved assets remain unchanged. Approved local visual mappings are now **22**.
+
+## Phase 5 additional supplied assets — batch 3
+The user supplied `newest_enhanced_club_images_only (1).zip`. No existing project logo file was replaced. Eight newly supplied logos were added and mapped to Club identities already present in the local mock/reference Club dataset.
+
+| Uploaded filename | Project filename | Approved visual identity | asset key | public slug | Confidence |
+|---|---|---|---|---|---|
+| the_orchard_manila_golf_club_crest.png | orchard-golf-country-club.png | Orchard Golf & Country Club / The Orchard Golf & Country Club | ORCHARD_GOLF_COUNTRY_CLUB | orchard-golf-country-club | High |
+| elegant_palms_country_club_emblem.png | palms-country-club.png | Palms Country Club / The Palms Country Club | PALMS_COUNTRY_CLUB | palms-country-club | High |
+| philippine_columbian_association_emblem.png | philippine-columbian-association.png | Philippine Columbian Association | PHILIPPINE_COLUMBIAN_ASSOCIATION | philippine-columbian-association | High |
+| pico_de_loro_beach_club_logo.png | pico-de-loro-beach-country-club.png | Pico de Loro Beach & Country Club | PICO_DE_LORO_BEACH_COUNTRY_CLUB | pico-de-loro-beach-country-club | High |
+| quezon_city_sports_club_emblem.png | quezon-city-sports-club.png | Quezon City Sports Club | QUEZON_CITY_SPORTS_CLUB | quezon-city-sports-club | High |
+| riviera_golf_club_fountain_emblem.png | riviera-golf-club.png | Riviera Golf Club | RIVIERA_GOLF_CLUB | riviera-golf-club | High |
+| the_rockwell_club_tree_emblem.png | rockwell-leisure-club.png | Rockwell Leisure Club / The Rockwell Club | ROCKWELL_LEISURE_CLUB | rockwell-leisure-club | High |
+| royal_northwoods_golf_club_crest.png | royal-northwoods-golf-country-club.png | Royal Northwoods Golf & Country Club | ROYAL_NORTHWOODS_GOLF_COUNTRY_CLUB | royal-northwoods-golf-country-club | High |
+
+The mock Club dataset already contained all eight Club identities, so no market values or Club records were replaced. Existing 22 approved visual assets remain unchanged. Approved local visual mappings are now **30**. The older ambiguous `navy_diamond_with_golden_emblem.png` remains intentionally unmapped.
