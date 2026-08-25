@@ -74,3 +74,21 @@ No existing PGA backend or admin frontend file was modified.
 - Redesigned `src/components/club-market-cards.tsx` so every share class visibly separates ownership transactions (Seller/Buyer) from playing-access transactions (Lessor/Lessee).
 - Added responsive, reduced-motion-safe hover, stagger, flow-line, orbit, and panel animations in `src/app/globals.css`.
 - No changes to Google Sheet source, no-cache behavior, API contracts, or existing Club asset mappings.
+
+## Phase 5 Home + About company-image/content enhancement
+- `src/app/page.tsx` — redesigned Home hero photography, 10-year proof, company image collage, buy/sell/lessor/lessee service paths, and team-photo closing CTA while preserving Club and Share Price sections.
+- `src/app/about/page.tsx` — redesigned About hero, decade story, buyer/seller/lessee/lessor content, approach section, editorial company gallery, decade band, and closing CTA.
+- `src/content/company.ts` — removed the outdated twenty-year organization statement and replaced it with factual approximately-a-decade wording used by Home/About.
+- `src/app/globals.css` — responsive company-photo layouts, hover/reveal refinements, dark-theme compatibility, and reduced-motion handling.
+- `public/images/company/*.webp` — eight curated, optimized company/event assets from `new_pga_enhanced_images_only.zip`.
+- `docs/client-site/02_DESIGN_SYSTEM.md`, `04_ASSET_MAPPING.md`, `06_PHASE_TRACKER.md`, `07_FILE_CHANGE_LOG.md`, `08_TESTING_CHECKLIST.md`, `09_NEXT_PROMPT.md` — phase documentation updated.
+- No API route, PGA backend integration, Club data source, Share Price data source, filtering, search, environment variable, or server-only BFF contract was changed.
+
+## Phase 5 — Home/About above-the-fold refinement
+
+- `src/app/globals.css`
+  - Reduced Home hero vertical footprint on desktop and short laptop viewports.
+  - Raised and compacted the Home company-photo composition so the primary copy, CTAs, and proof points fit more naturally in the initial viewport.
+  - Changed the About hero from a bottom-heavy composition to a centered desktop composition and reduced headline/support spacing.
+  - Added responsive compact-height rules for tablet/mobile without changing page content or imagery.
+- No API routes, catalog logic, Share Price logic, Clubs logic, or server/BFF files were changed.

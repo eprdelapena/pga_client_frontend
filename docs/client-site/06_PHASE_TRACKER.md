@@ -56,3 +56,11 @@ Release validation / bug fixes only. Run the real local build and browser checks
 - Restored the Phase 4 homepage hero and section ordering.
 - Removed the Phase 5 golf-photo hero and hero market snapshot.
 - Preserved Phase 5 market functionality and four-sided Seller/Lessor/Buyer/Lessee data presentation.
+
+## Phase 5 — Home + About company-image refinement completed at source level
+- real PGA company photography curated into Home and `/about`
+- inaccurate 20+ year statements replaced by confirmed 10-year / approximately-a-decade wording
+- Home hero, company story, service-path, and closing image sections refined
+- About hero, story, market-role, approach, gallery, decade band, and closing CTA refined
+- existing Clubs/Share Prices/BFF behavior preserved
+- existing lightweight reveal/motion system reused; reduced-motion support preserved

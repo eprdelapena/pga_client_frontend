@@ -1,7 +1,15 @@
-# Suggested Next Prompt — Phase 5
+# Suggested Next Prompt — after Home + About company-image refinement
 
-Continue only from `pga-client-phase-04.zip`.
+Continue only from:
 
-Recommended scope: **PHASE 5 — RELEASE VALIDATION / BUG FIXES ONLY**.
+```text
+pga-client-phase-05-home-about-company-images.zip
+```
 
-First run the release candidate locally and, ideally, in a staging deployment. Supply actual build errors, browser screenshots, console/network errors, Lighthouse/accessibility findings, or hosting-specific issues. Fix only verified release blockers/regressions. Do not add a client portal, matching, payments, admin tools, CMS, or another major redesign unless separately approved.
+Treat that ZIP as the only client-facing Next.js baseline.
+
+First read all `docs/client-site/*.md`. Preserve the existing Next.js BFF architecture, Club directory, Club details, Share Price data source, Seller/Lessor/Buyer/Lessee market behavior, search/filter/sort behavior, dark/light theme, security/rate limiting, metadata, and all Home/About company photography introduced in the current baseline.
+
+Recommended next scope: **runtime validation / screenshot-driven polish only**. Run `npm install`, `npm run lint`, `npm run typecheck`, and `npm run build`, then smoke-test `/`, `/about`, `/clubs`, `/share-prices`, `/services`, and `/contact` on desktop/tablet/mobile. Fix only verified errors, visual regressions, overflow, accessibility problems, or deployment blockers. Do not redesign unrelated pages or modify the PGA backend/admin system unless explicitly requested.
+
+Return the complete runnable Next.js project ZIP, not a patch-only archive, and append all verified changes to the existing phase tracker, file change log, and testing checklist.

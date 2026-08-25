@@ -43,3 +43,29 @@ Then smoke-test at minimum:
 - keyboard navigation and mobile menu
 - reduced-motion mode
 - malformed/empty/unavailable market states
+
+## Phase 5 Home + About company-image refinement source checks
+- [x] Home and `/about` source routes remain present
+- [x] all referenced company image files exist
+- [x] Home/About no longer contain `20+`, `20 years`, `twenty years`, `two decades`, or `over 20` wording
+- [x] Home/About use 10 years / approximately a decade consistently
+- [x] existing `/api/clubs` and `/api/share-prices` files were not modified
+- [x] existing Clubs and Share Price page/component sources were not modified
+- [x] new image sections have mobile breakpoints and reduced-motion rules
+- [ ] full `npm run lint`, `npm run typecheck`, and `npm run build` — run below if dependencies can be installed in the execution environment
+
+### Execution environment result for this refinement
+- `npm ci` — attempted but did not complete within the execution window; offline retry confirmed the required npm packages are not cached (`ENOTCACHED` for `@types/node`).
+- `npm run lint` — cannot execute without installed project dependencies (`eslint: not found`).
+- `npm run typecheck` — project-level check cannot complete without installed Next/React/Node type dependencies; this is an environment/dependency absence, not a phase-specific diagnostic.
+- `npm run build` — cannot execute without installed project dependencies (`next: not found`).
+- Source-level fallback validation: all 51 `src/**/*.ts` / `src/**/*.tsx` files transpile with 0 TypeScript syntax diagnostics using the available global TypeScript compiler; all 8 referenced company assets exist; 20-year wording scan passes; intended-change boundary diff passes.
+
+## Home/About above-the-fold refinement
+
+- [x] Change is CSS-only; Home/About JSX content and all BFF/API routes remain unchanged.
+- [x] Desktop Home hero no longer uses the original full-viewport minimum height for the company-photo variant.
+- [x] Desktop About hero content is center-aligned instead of bottom-aligned, reducing the need to scroll before reading the complete opening message.
+- [x] Short-desktop-height fallback rules are present.
+- [x] Tablet/mobile compact rules are present.
+- [x] Reduced-motion rules from the prior Home/About enhancement remain intact.

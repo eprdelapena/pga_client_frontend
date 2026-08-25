@@ -113,3 +113,19 @@ The user supplied `new_wack_vineyard_valley_valle_verde_only(1).zip`. Existing p
 | valle_verde_country_club_emblem.png | valle-verde-country-club.png | Valle Verde Country Club | VALLE_VERDE_COUNTRY_CLUB | valle-verde-country-club | High |
 
 The mock Club dataset already contained all four Club identities, so no market values or Club records were replaced. Existing 39 approved visual assets remain unchanged. Approved local visual mappings are now **43**.
+
+## Phase 5 — Company photography for Home + About
+These assets originate from `new_pga_enhanced_images_only.zip` and are used only for public company storytelling.
+
+| Source asset | Public asset | Use |
+|---|---|---|
+| `golden_golf_course_skyline_at_sunset.png` | `public/images/company/golf-course-sunset.webp` | Home hero / About story |
+| `prestige_golf_access_team_banner.png` | `public/images/company/pga-team.webp` | Home hero supporting image / About hero / closing story |
+| `women_at_a_golf_promotional_booth.png` | `public/images/company/pga-event-team.webp` | Home company collage / About gallery |
+| `prestige_golf_expo_booth_showcase.png` | `public/images/company/pga-expo-booth.webp` | Home company collage / About gallery |
+| `prestige_golf_awards_registration_booth.png` | `public/images/company/pga-registration-booth.webp` | About gallery |
+| `urban_dusk_golf_practice_event.png` | `public/images/company/golf-practice-event.webp` | Home collage / About gallery / closing CTA |
+| `10th_anniversary_golf_team_celebration.png` | `public/images/company/pga-decade-celebration.webp` | About decade story |
+| `prestige_golf_raffle_registration_booth.png` | `public/images/company/pga-community-booth.webp` | About responsive gallery |
+
+The files are WebP optimizations of the supplied imagery; no Club identity mapping was changed.
