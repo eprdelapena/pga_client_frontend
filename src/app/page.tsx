@@ -19,6 +19,13 @@ export const metadata: Metadata = pageMetadata(
   '/',
 );
 
+const servicePaths = [
+  ['01', 'Buy', 'Explore proprietary Club Share opportunities with market context and hands-on transaction support.'],
+  ['02', 'Sell', 'Position a Club Share for the market with brokerage coordination and practical guidance.'],
+  ['03', 'Lease as lessor', 'Coordinate playing-right opportunities for owners who want to make access available.'],
+  ['04', 'Lease as lessee', 'Explore playing-right access for participating golf and country clubs.'],
+] as const;
+
 export default async function Home() {
   const catalog = await getClubDirectoryResult();
   const clubs = catalog.clubs;
@@ -27,47 +34,70 @@ export default async function Home() {
   const initialMarket = await getInitialMarketResult();
 
   return <>
-    <section className="hero-section phase1-hero phase2-hero phase3-hero">
+    <section className="hero-section phase1-hero phase2-hero phase3-hero company-home-hero">
       <div className="hero-noise" aria-hidden="true"/>
       <div className="phase3-hero-rule" aria-hidden="true"/>
-      <div className="hero-grid shell phase3-hero-grid">
-        <div className="hero-copy phase3-hero-copy">
+      <div className="hero-grid shell phase3-hero-grid company-home-hero-grid">
+        <div className="hero-copy phase3-hero-copy company-home-hero-copy">
           <p className="eyebrow hero-eyebrow hero-reveal hero-reveal-1">Prestige Golf Access & Clubshares · Philippines</p>
-          <h1 className="hero-reveal hero-reveal-2"><span>Prestige in every</span><em>membership.</em><span>Opportunity in every share.</span></h1>
-          <p className="hero-lede hero-reveal hero-reveal-3">Professional, personalized brokerage for golf and country club shares — combining prevailing market context with hands-on transaction and membership support.</p>
+          <h1 className="hero-reveal hero-reveal-2"><span>Club shares,</span><em>made clearer.</em><span>Handled personally.</span></h1>
+          <p className="hero-lede hero-reveal hero-reveal-3">PGA helps clients navigate buying, selling, leasing, and membership opportunities across Philippine golf and country clubs with practical market guidance and attentive transaction support.</p>
           <div className="hero-actions hero-reveal hero-reveal-4">
             <Link className="button button-primary magnetic-button" href="/clubs">Explore club shares <span>↗</span></Link>
             <Link className="button button-ghost" href="/share-prices">View market prices</Link>
             <Link className="phase3-tertiary-link" href="/about">About PGA <span>↗</span></Link>
           </div>
-          <div className="hero-proof hero-reveal hero-reveal-5">
-            <span><b>20+</b> years industry experience</span>
-            <span><b>SEC</b> registered brokerage firm</span>
+          <div className="hero-proof hero-reveal hero-reveal-5 company-home-proof">
+            <span><b>10</b> years in the industry</span>
+            <span><b>4</b> paths: buy · sell · lessor · lessee</span>
           </div>
         </div>
-        <div className="hero-art phase1-hero-art phase3-hero-art" aria-label="Featured club identity collage">
-          <div className="hero-orbit orbit-one"/><div className="hero-orbit orbit-two"/><div className="hero-sweep"/>
-          <div className="golf-ball" aria-hidden="true"/>
-          {featured.slice(0,4).map((club,index)=> club.logo ? <div className={`hero-logo hero-logo-${index+1}`} key={club.slug}><Image src={club.logo} alt={`${club.name} logo`} fill sizes="160px"/></div> : null)}
-          <div className="hero-market-card"><span>Private market</span><strong>Club Shares</strong><small>Buy · Sell · Playing Rights</small></div>
-          <div className="hero-art-caption"><span>01</span><p>{catalog.status === 'ready' ? 'Recognized club identities.\nPublished market references.' : 'Premium brokerage.\nPersonalized guidance.'}</p></div>
-          <div className="phase3-hero-caption"><span>Brokerage</span><p>Golf & country club shares</p></div>
+
+        <div className="company-hero-visual hero-reveal hero-reveal-3" aria-label="PGA Clubshares and golf market visual">
+          <div className="company-hero-photo company-hero-photo-main">
+            <Image src="/images/company/golf-course-sunset.webp" alt="Golf course in the Philippines at sunset" fill priority sizes="(max-width: 900px) 92vw, 42vw"/>
+          </div>
+          <div className="company-hero-photo company-hero-photo-team">
+            <Image src="/images/company/pga-team.webp" alt="Prestige Golf Access & Clubshares team" fill sizes="(max-width: 900px) 48vw, 22vw"/>
+          </div>
+          <div className="company-hero-float-card">
+            <span>Market paths</span>
+            <strong>Buy · Sell · Lease</strong>
+            <small>Golf & country club shares</small>
+          </div>
+          <div className="company-hero-decade"><strong>10</strong><span>years of<br/>client service</span></div>
+          <div className="company-hero-outline" aria-hidden="true"/>
         </div>
       </div>
       <div className="hero-marquee" aria-hidden="true"><div>Golf Club Shares <i/> Country Club Shares <i/> Playing Rights <i/> Market Advisory <i/> Membership Processing <i/> Golf Club Shares <i/> Country Club Shares <i/> Playing Rights <i/> Market Advisory <i/> Membership Processing</div></div>
     </section>
 
     <section className="stats-section phase1-proof-strip phase3-proof-strip"><div className="shell proof-strip-grid">
-      <Reveal><p className="eyebrow">A considered brokerage experience</p><p className="stats-note">Market context, personalized guidance, and practical support across the club-share journey.</p></Reveal>
-      <Reveal delay={70} className="proof-stat"><strong>20+</strong><span>Years of industry experience represented by the team</span></Reveal>
+      <Reveal><p className="eyebrow">A considered brokerage experience</p><p className="stats-note">A decade of market familiarity, personalized guidance, and practical support across the club-share journey.</p></Reveal>
+      <Reveal delay={70} className="proof-stat"><strong>10</strong><span>Years serving the golf and country club share market</span></Reveal>
       <Reveal delay={140} className="proof-stat"><strong>{catalog.status === 'ready' ? String(clubs.length).padStart(2,'0') : '—'}</strong><span>{catalog.source === 'mock' ? 'Approved demo club identities' : 'Approved mapped club identities'}</span></Reveal>
-      <Reveal delay={210} className="proof-stat"><strong>SEC</strong><span>Registered and licensed brokerage firm</span></Reveal>
+      <Reveal delay={210} className="proof-stat"><strong>01</strong><span>Focused brokerage relationship from inquiry through processing</span></Reveal>
     </div></section>
 
-    <section className="section phase3-company-intro"><div className="shell phase3-company-grid">
-      <Reveal className="phase3-company-index"><span>01</span><p>Company profile</p></Reveal>
-      <Reveal delay={80} className="phase3-company-headline"><p className="eyebrow">Prestige Golf Access & Clubshares</p><h2>Not simply a transaction.<br/><em>A long-term relationship.</em></h2></Reveal>
-      <Reveal delay={150} className="phase3-company-copy"><p>{COMPANY.positioning}</p><p>{COMPANY.organization}</p><Link className="text-link" href="/about">Read our story <span>↗</span></Link></Reveal>
+    <section className="section company-photo-story"><div className="shell company-photo-story-grid">
+      <Reveal className="company-photo-story-copy">
+        <p className="eyebrow">A decade in the market</p>
+        <h2>Market knowledge is most useful when it becomes <em>clear guidance.</em></h2>
+        <p>{COMPANY.positioning}</p>
+        <p>{COMPANY.organization}</p>
+        <Link className="text-link" href="/about">Read our story <span>↗</span></Link>
+      </Reveal>
+      <div className="company-photo-collage" aria-label="PGA Clubshares team and event photos">
+        <Reveal className="company-photo-collage-main"><Image src="/images/company/pga-event-team.webp" alt="PGA representatives at a golf event booth" fill sizes="(max-width: 820px) 76vw, 28vw"/></Reveal>
+        <Reveal delay={100} className="company-photo-collage-wide"><Image src="/images/company/golf-practice-event.webp" alt="Golf practice event with a city skyline" fill sizes="(max-width: 820px) 76vw, 30vw"/></Reveal>
+        <Reveal delay={180} className="company-photo-collage-small"><Image src="/images/company/pga-expo-booth.webp" alt="PGA Clubshares promotional booth at an event" fill sizes="(max-width: 820px) 46vw, 16vw"/></Reveal>
+        <div className="company-photo-collage-note"><strong>10 years</strong><span>of connecting people with golf and country club share opportunities</span></div>
+      </div>
+    </div></section>
+
+    <section className="company-service-paths"><div className="shell">
+      <Reveal><div className="company-service-paths-head"><p className="eyebrow light">Four ways we help</p><h2>One market.<br/><em>Different client goals.</em></h2><p>Whether the objective is ownership, divestment, or playing access, PGA provides a focused path for the transaction in front of you.</p></div></Reveal>
+      <div className="company-service-paths-grid">{servicePaths.map(([n,title,copy],index)=><Reveal key={n} delay={index*70} className="company-service-path"><span>{n}</span><h3>{title}</h3><p>{copy}</p><i aria-hidden="true">↗</i></Reveal>)}</div>
     </div></section>
 
     <section className="section clubs-preview phase3-clubs-preview"><div className="shell">
@@ -87,7 +117,7 @@ export default async function Home() {
     <section className="section market-preview-section phase3-market-preview"><div className="shell">
       <Reveal><div className="market-title-row phase3-market-title"><SectionHeading eyebrow="Published market" title="A live view built for clarity." copy="Review published indicative Share Prices in a focused market view, then connect with PGA for current availability and personalized brokerage guidance."/><Link href="/share-prices" className="text-link">View all share prices <span>↗</span></Link></div></Reveal>
       <Reveal delay={100}><LiveMarket source={source} initialPayload={initialMarket.payload} initialError={initialMarket.error} compact limit={7}/></Reveal>
-      <p className="market-footnote">Indicative prices are subject to change. {source === 'mock' ? 'This environment is explicitly configured for demo data.' : "Published market references are shown from PGA\'s current public market feed."}</p>
+      <p className="market-footnote">Indicative prices are subject to change. {source === 'mock' ? 'This environment is explicitly configured for demo data.' : "Published market references are shown from PGA's current public market feed."}</p>
     </div></section>
 
     <section className="services-section phase1-services phase3-services-preview"><div className="shell phase3-services-grid">
@@ -100,6 +130,6 @@ export default async function Home() {
       <div className="phase3-process-list">{PROCESS.map(([n,title,copy],i)=><Reveal key={n} delay={i*45} className="phase3-process-step"><span>{n}</span><h3>{title}</h3><p>{copy}</p></Reveal>)}</div>
     </div></section>
 
-    <section className="cta-section phase1-cta phase3-cta"><div className="shell cta-inner phase3-cta-inner"><Reveal><p className="eyebrow light">Prestige Golf Access & Clubshares</p><h2>Looking for a particular club share?</h2><p>Explore the published market or speak directly with PGA about the Club Share you have in mind.</p><div className="hero-actions"><Link className="button button-light" href="/share-prices">View share prices</Link><Link className="button button-darkghost" href="/contact">Talk to PGA</Link></div></Reveal><div className="cta-rings" aria-hidden="true"><i/><i/><i/></div></div></section>
+    <section className="company-closing-image"><div className="company-closing-image-photo"><Image src="/images/company/pga-team.webp" alt="Prestige Golf Access & Clubshares team" fill sizes="100vw"/></div><div className="company-closing-overlay"/><div className="shell company-closing-content"><Reveal><p className="eyebrow light">Prestige Golf Access & Clubshares</p><h2>A decade of showing up for the <em>next conversation.</em></h2><p>Tell us the Club, share class, or playing-right requirement you want to explore. PGA can help you understand the current market context and the next practical step.</p><div className="hero-actions"><Link className="button button-light" href="/share-prices">View share prices</Link><Link className="button button-darkghost" href="/contact">Talk to PGA</Link></div></Reveal></div></section>
   </>;
 }

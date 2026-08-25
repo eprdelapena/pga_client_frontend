@@ -6,7 +6,7 @@ export const COMPANY = {
   positioning:
     'Prestige Golf Access & Clubshares, Inc. is a registered and licensed brokerage firm under the Securities and Exchange Commission, providing professional and personalized service for golf and country club share requirements.',
   organization:
-    'The organization is composed of Japanese national and local counterparts, plus club shares associate directors and general management with more than twenty years of experience in the industry.',
+    'For approximately a decade, Prestige Golf Access & Clubshares has served clients in the Philippine golf and country club share market through a team focused on professional, personalized brokerage support.',
   philosophy: [
     'We do not merely seek to expand business and volume. We are sincerely committed to intermediary service that can contribute to golf and club-share trading and to the welfare of our clients.',
     'It is the advocacy of the corporation to grow with the PGA family while inspiring and helping people achieve their goals.',

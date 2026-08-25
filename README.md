@@ -68,3 +68,6 @@ npm run dev -- -p 3001
 The public catalog first tries the live Google Sheets CSV endpoint. If the shared PGA file is an uploaded `.xlsx` opened in Google Sheets compatibility mode and Google returns HTTP 400 for CSV export, the server downloads that **same live Google-hosted workbook** and reads the configured worksheet (`PGA_GOOGLE_SHEET_TAB`, default `August 24, 2026`) directly. This is an alternate transport for the same live source, not a fallback dataset. The visible site still does not call the PGA admin/backend API while `PGA_UI_DATA_SOURCE=sheet`.
 
 `PGA_GOOGLE_SHEET_GID` is optional and should be left blank for the current uploaded Excel file unless the source is converted to a native Google Sheet and a specific `gid` is known.
+
+### Latest UI refinement
+Club detail pages now present each share class as two permanently visible market panels: **Share Rights** (Seller / Buyer) and **Playing Rights** (Lessor / Lessee), with responsive editorial motion and no hidden pricing rows.
