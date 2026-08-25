@@ -27,9 +27,9 @@ function ContactRow({label, value, href}: {label: string; value: string; href?: 
   );
 }
 
-function TeamCard({member, index}: {member: TeamMember; index: number}) {
+function TeamCard({member}: {member: TeamMember}) {
   return (
-    <Reveal className="team-card" delay={(index % 3) * 70}>
+    <Reveal className="team-card">
       <article>
         <div className="team-portrait-shell">
           <div className="team-portrait-ring" aria-hidden="true"/>
@@ -41,7 +41,6 @@ function TeamCard({member, index}: {member: TeamMember; index: number}) {
               sizes="(max-width: 680px) 78vw, (max-width: 980px) 42vw, 28vw"
             />
           </div>
-          <span className="team-card-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
         </div>
         <div className="team-card-body">
           <p className="team-role">{member.role}</p>
@@ -58,19 +57,19 @@ function TeamCard({member, index}: {member: TeamMember; index: number}) {
   );
 }
 
-function TeamGroup({eyebrow, title, members, startIndex}: {eyebrow: string; title: string; members: TeamMember[]; startIndex: number}) {
+function TeamGroup({eyebrow, title, members, first = false}: {eyebrow: string; title: string; members: TeamMember[]; first?: boolean}) {
   return (
-    <section className={`team-group-section ${startIndex === 0 ? 'team-directory-first' : ''}`}>
+    <section className={`team-group-section ${first ? 'team-directory-first' : ''}`}>
       <div className="shell">
         <Reveal className="team-group-head">
           <div>
             <p className="eyebrow">{eyebrow}</p>
             <h2>{title}</h2>
           </div>
-          <p>{members.length} public profiles with the business contact and registration details supplied in PGA&apos;s team directory references.</p>
+          <p>Public business contact and registration details are presented clearly for convenient reference.</p>
         </Reveal>
         <div className="team-grid">
-          {members.map((member, index) => <TeamCard key={member.name} member={member} index={startIndex + index}/>) }
+          {members.map((member) => <TeamCard key={member.name} member={member}/>) }
         </div>
       </div>
     </section>
@@ -80,8 +79,8 @@ function TeamGroup({eyebrow, title, members, startIndex}: {eyebrow: string; titl
 export default function OurTeamPage() {
   return (
     <>
-      <TeamGroup eyebrow="01 / Officers" title="Leadership & Directors" members={leadership} startIndex={0}/>
-      <TeamGroup eyebrow="02 / Sales" title="Sales Leadership" members={salesLeadership} startIndex={leadership.length}/>
+      <TeamGroup eyebrow="Officers" title="Leadership & Directors" members={leadership} first/>
+      <TeamGroup eyebrow="Sales" title="Sales Leadership" members={salesLeadership}/>
 
       <section className="team-closing">
         <div className="shell team-closing-grid">

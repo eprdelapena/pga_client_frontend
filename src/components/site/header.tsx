@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {useEffect, useRef, useState, type CSSProperties} from 'react';
@@ -93,7 +94,7 @@ export function Header() {
     document.documentElement.style.colorScheme = next;
     try { localStorage.setItem('pga-theme', next); } catch {}
     const themeMeta = document.querySelector('meta[name="theme-color"]');
-    themeMeta?.setAttribute('content', next === 'dark' ? '#07110d' : '#0d4b36');
+    themeMeta?.setAttribute('content', next === 'dark' ? '#07110d' : '#79a900');
     setTheme(next);
   };
 
@@ -116,7 +117,9 @@ export function Header() {
       <div ref={progressRef} className="scroll-progress" style={{'--scroll-progress': 0} as CSSProperties} aria-hidden="true"/>
       <div className="shell nav-shell">
         <Link href="/" className="brand" aria-label={`${COMPANY.name} home`} onClick={() => setOpen(false)}>
-          <span className="brand-monogram" aria-hidden="true">PGA</span>
+          <span className="brand-logo-wrap" aria-hidden="true">
+            <Image className="brand-logo-image" src="/images/brand/pga-10th-anniversary-logo.png" alt="" width={58} height={58} priority sizes="58px" />
+          </span>
           <span className="brand-copy"><strong>Prestige</strong><small>Golf Access & Clubshares</small></span>
         </Link>
         <nav className="desktop-nav" aria-label="Primary navigation">

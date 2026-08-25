@@ -124,3 +124,11 @@ No existing PGA backend or admin frontend file was modified.
 - `src/content/team.ts` — team profiles that previously used the generic `info@pgaclubshares.com` fallback now use the primary company Gmail address; individual salesperson email addresses remain unchanged.
 - `src/components/site/header.tsx`, `src/app/layout.tsx`, `src/app/manifest.ts` — light browser/theme metadata now follows the dominant apple-green brand instead of the earlier blue experiment.
 - No Club/Share Price API route, BFF data contract, search/filter behavior, backend integration, portrait mapping, or Night-mode palette was changed.
+
+
+## Home verified-copy + Services CTA visibility
+- Replaced unsupported Home numeric proof values with qualitative `Personalized` and `End-to-end` service statements.
+- Removed the numeric `4 paths` proof copy and numbered service-path labels.
+- Kept `10 years` as the only numeric Home experience claim in this section.
+- Added explicit light-mode contrast rules for the Services CTA buttons (`View market prices` and `Contact PGA`).
+- No API/BFF, market data, routing, or dark-mode behavior changed.

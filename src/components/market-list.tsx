@@ -100,14 +100,6 @@ export function MarketList({rows, compact = false}: {rows: PublicMarketPrice[]; 
 
   return (
     <div className="grouped-market-directory grouped-market-directory-visible">
-      <div className="grouped-market-summary">
-        <div>
-          <span>Market directory</span>
-          <strong>{groups.length} club{groups.length === 1 ? '' : 's'} <i>·</i> {rows.length} share class{rows.length === 1 ? '' : 'es'}</strong>
-        </div>
-        <p>Clubs are grouped once; every share class and its prices are shown immediately below.</p>
-      </div>
-
       <div className="grouped-market-groups">
         {groups.map((group, groupIndex) => {
           const lead = group.rows[0];

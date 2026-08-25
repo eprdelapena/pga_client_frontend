@@ -20,10 +20,10 @@ export const metadata: Metadata = pageMetadata(
 );
 
 const servicePaths = [
-  ['01', 'Buy', 'Explore proprietary Club Share opportunities with market context and hands-on transaction support.'],
-  ['02', 'Sell', 'Position a Club Share for the market with brokerage coordination and practical guidance.'],
-  ['03', 'Lease as lessor', 'Coordinate playing-right opportunities for owners who want to make access available.'],
-  ['04', 'Lease as lessee', 'Explore playing-right access for participating golf and country clubs.'],
+  ['Buy', 'Explore proprietary Club Share opportunities with market context and hands-on transaction support.'],
+  ['Sell', 'Position a Club Share for the market with brokerage coordination and practical guidance.'],
+  ['Lease as lessor', 'Coordinate playing-right opportunities for owners who want to make access available.'],
+  ['Lease as lessee', 'Explore playing-right access for participating golf and country clubs.'],
 ] as const;
 
 export default async function Home() {
@@ -49,7 +49,7 @@ export default async function Home() {
           </div>
           <div className="hero-proof hero-reveal hero-reveal-5 company-home-proof">
             <span><b>10</b> years in the industry</span>
-            <span><b>4</b> paths: buy · sell · lessor · lessee</span>
+            <span className="hero-proof-service">Personalized guidance across buying, selling, lessor, and lessee needs</span>
           </div>
         </div>
 
@@ -75,8 +75,8 @@ export default async function Home() {
     <section className="stats-section phase1-proof-strip phase3-proof-strip"><div className="shell proof-strip-grid">
       <Reveal><p className="eyebrow">A considered brokerage experience</p><p className="stats-note">A decade of market familiarity, personalized guidance, and practical support across the club-share journey.</p></Reveal>
       <Reveal delay={70} className="proof-stat"><strong>10</strong><span>Years serving the golf and country club share market</span></Reveal>
-      <Reveal delay={140} className="proof-stat"><strong>{catalog.status === 'ready' ? String(clubs.length).padStart(2,'0') : '—'}</strong><span>{catalog.source === 'mock' ? 'Approved demo club identities' : 'Approved mapped club identities'}</span></Reveal>
-      <Reveal delay={210} className="proof-stat"><strong>01</strong><span>Focused brokerage relationship from inquiry through processing</span></Reveal>
+      <Reveal delay={140} className="proof-stat proof-stat-word"><strong>Personalized</strong><span>Client-focused assistance tailored to each club-share requirement</span></Reveal>
+      <Reveal delay={210} className="proof-stat proof-stat-word"><strong>End-to-end</strong><span>Practical guidance from initial inquiry through transaction processing</span></Reveal>
     </div></section>
 
     <section className="section company-photo-story"><div className="shell company-photo-story-grid">
@@ -96,8 +96,8 @@ export default async function Home() {
     </div></section>
 
     <section className="company-service-paths"><div className="shell">
-      <Reveal><div className="company-service-paths-head"><p className="eyebrow light">Four ways we help</p><h2>One market.<br/><em>Different client goals.</em></h2><p>Whether the objective is ownership, divestment, or playing access, PGA provides a focused path for the transaction in front of you.</p></div></Reveal>
-      <div className="company-service-paths-grid">{servicePaths.map(([n,title,copy],index)=><Reveal key={n} delay={index*70} className="company-service-path"><span>{n}</span><h3>{title}</h3><p>{copy}</p><i aria-hidden="true">↗</i></Reveal>)}</div>
+      <Reveal><div className="company-service-paths-head"><p className="eyebrow light">How we help</p><h2>One market.<br/><em>Different client goals.</em></h2><p>Whether the objective is ownership, divestment, or playing access, PGA provides a focused path for the transaction in front of you.</p></div></Reveal>
+      <div className="company-service-paths-grid">{servicePaths.map(([title,copy],index)=><Reveal key={title} delay={index*70} className="company-service-path"><h3>{title}</h3><p>{copy}</p><i aria-hidden="true">↗</i></Reveal>)}</div>
     </div></section>
 
     <section className="section clubs-preview phase3-clubs-preview"><div className="shell">

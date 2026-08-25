@@ -14,6 +14,13 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
+  icons: {
+    icon: [
+      {url: '/favicon.ico'},
+      {url: '/favicon-64.png', type: 'image/png', sizes: '64x64'},
+    ],
+    apple: [{url: '/apple-touch-icon.png', type: 'image/png', sizes: '180x180'}],
+  },
   alternates: {canonical: absoluteUrl('/')},
   robots: {index: true, follow: true},
   openGraph: {
@@ -36,7 +43,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0d4b36',
+  themeColor: '#79a900',
   colorScheme: 'light dark',
 };
 
@@ -46,6 +53,7 @@ function OrganizationJsonLd() {
     '@type': 'Organization',
     name: COMPANY.name,
     url: absoluteUrl('/'),
+    logo: absoluteUrl('/images/brand/pga-10th-anniversary-logo.png'),
     email: COMPANY.emails[0],
     telephone: COMPANY.phone.globe.label,
     address: {

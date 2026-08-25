@@ -119,3 +119,11 @@ Then smoke-test at minimum:
 - [x] CSS brace balance passes.
 - [x] Club and Share Price API route source hashes remain unchanged from the incoming baseline.
 - [ ] Full `npm run lint`, `npm run typecheck`, and `npm run build` require the project dependency tree; this artifact does not include `node_modules`.
+
+
+### Home verified-copy + Services CTA visibility
+- [x] Removed `42`/dynamic club-count proof claim from the Home brokerage-experience strip.
+- [x] Removed `01` proof claim and numeric `4 paths` copy.
+- [x] Home proof strip keeps only the verified `10 years` numeric claim.
+- [x] Services CTA buttons have explicit high-contrast light-mode foreground/background rules.
+- [x] Dark-mode selectors were not edited by this change.

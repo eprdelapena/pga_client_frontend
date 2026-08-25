@@ -25,7 +25,6 @@ export const COMPANY = {
     globe: {label: '+63 967 234 2932', href: 'tel:+639672342932'},
   },
   emails: [
-    'info@pgaclubshares.com',
     'pgaclubshares@gmail.com',
     'info@pgaclubshares.ph',
   ],
