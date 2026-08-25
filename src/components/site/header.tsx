@@ -9,6 +9,7 @@ import {COMPANY} from '@/content/company';
 const links = [
   ['/', 'Home'],
   ['/clubs', 'Clubs'],
+  ['/club-map', 'Club Map'],
   ['/share-prices', 'Share Prices'],
   ['/services', 'Services'],
   ['/about', 'About'],
@@ -99,7 +100,7 @@ export function Header() {
   };
 
   const isActive = (href: string) => href === '/' ? pathname === '/' : pathname.startsWith(href);
-  const lightTopPage = pathname === '/clubs' || pathname === '/share-prices' || pathname === '/our-team' || pathname === '/contact';
+  const lightTopPage = pathname === '/clubs' || pathname === '/club-map' || pathname === '/share-prices' || pathname === '/our-team' || pathname === '/contact';
 
   return (
     <header className={`site-header phase3-header ${lightTopPage ? 'is-light-page' : ''} ${scrolled ? 'is-scrolled' : ''}`}>

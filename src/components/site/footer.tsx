@@ -3,6 +3,7 @@ import {COMPANY} from '@/content/company';
 
 const footerLinks = [
   ['/clubs', 'Clubs'],
+  ['/club-map', 'Club Map'],
   ['/share-prices', 'Share Prices'],
   ['/services', 'Services'],
   ['/about', 'About'],
