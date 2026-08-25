@@ -6,6 +6,7 @@ const footerLinks = [
   ['/share-prices', 'Share Prices'],
   ['/services', 'Services'],
   ['/about', 'About'],
+  ['/our-team', 'Our Team'],
   ['/contact', 'Contact'],
 ] as const;
 
