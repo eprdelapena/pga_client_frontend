@@ -3,7 +3,7 @@
 Continue only from:
 
 ```text
-pga-client-phase-05-our-team.zip
+pga-client-phase-05-apple-green-blue-alternating-email-fixed.zip
 ```
 
 Treat that ZIP as the only client-facing Next.js baseline.

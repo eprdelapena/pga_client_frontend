@@ -94,3 +94,28 @@ Then smoke-test at minimum:
 - [x] Existing team data and portrait paths remain unchanged.
 - [x] `/our-team` uses the light/content-first header state at the top of the page.
 
+
+
+## Company logo + favicon update validation
+- [x] Supplied PGA 10th-anniversary logo processed into a transparent-corner 512×512 web asset without redrawing/replacing the supplied artwork.
+- [x] Header references the new company logo and preserves the existing company wordmark/navigation behavior.
+- [x] New PNG/ICO favicon variants exist at 64, 192, 512, Apple-touch, and multi-size ICO outputs.
+- [x] Old text-only `src/app/icon.tsx` favicon generator removed to avoid conflicting PGA-placeholder icon metadata.
+- [x] Manifest and root metadata reference the new favicon/app-icon assets.
+- [x] 52 TypeScript/TSX source files transpile with zero syntax diagnostics using the available global TypeScript compiler.
+- [x] Club and Share Price API route source files were not modified by this branding update.
+- [ ] Full `npm run build` could not execute in this artifact environment because project dependencies are not installed (`next: not found`). No build success is claimed.
+
+## Light-mode blue alternation + email correction validation
+- [x] `pgaclubshares@gmail.com` is the first/primary company email and therefore appears in the top contact bar/mobile menu/structured metadata where the primary company email is used.
+- [x] `info@pgaclubshares.ph` remains available as the secondary company email on multi-email contact surfaces.
+- [x] Exact unused generic address `info@pgaclubshares.com` no longer exists in `src/`.
+- [x] Existing individual team-member `@pgaclubshares.com` addresses remain unchanged.
+- [x] Direct contact top bar uses the blue secondary treatment with white copy.
+- [x] Home service marquee uses the blue secondary treatment with white copy.
+- [x] Alternating pale-blue supporting surfaces are explicitly defined for Home, About, Services, Clubs, Share Prices, Contact, Our Team, and Club detail pages.
+- [x] Apple-green filled brand sections retain white high-contrast copy.
+- [x] Dark-theme core variable block hash is unchanged from the incoming baseline.
+- [x] CSS brace balance passes.
+- [x] Club and Share Price API route source hashes remain unchanged from the incoming baseline.
+- [ ] Full `npm run lint`, `npm run typecheck`, and `npm run build` require the project dependency tree; this artifact does not include `node_modules`.

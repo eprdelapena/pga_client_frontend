@@ -107,3 +107,20 @@ No existing PGA backend or admin frontend file was modified.
 - Added content-first top spacing beneath the fixed header and enabled the light-page header treatment for `/our-team`.
 - Preserved all team profiles, enhanced portraits, contact details, animations, and downstream CTA content.
 
+
+
+## Phase 5 — Company logo + favicon update
+- `src/components/site/header.tsx` — replaced the placeholder PGA monogram with the supplied official 10th-anniversary PGA company logo while preserving the existing wordmark text and navigation behavior.
+- `public/images/brand/pga-10th-anniversary-logo.png` — web-optimized version of the supplied company logo with transparent outer corners for clean header presentation.
+- `src/app/icon.png`, `src/app/apple-icon.png`, `src/app/favicon.ico`, `public/favicon*.png`, `public/favicon.ico`, `public/apple-touch-icon.png` — favicon/app-icon variants generated from the same supplied logo.
+- `src/app/layout.tsx`, `src/app/manifest.ts` — favicon/app-icon metadata updated to use the supplied company identity.
+- `src/app/globals.css` — responsive header-logo sizing and subtle existing-brand hover treatment.
+- Removed the old text-only `src/app/icon.tsx` favicon generator.
+- No page content, Club/Share Price logic, API/BFF routes, team profiles, or backend integration was changed.
+
+## Light-mode blue alternation + company email correction
+- `src/app/globals.css` — kept apple green as the dominant light-mode brand color while making blue a visible secondary color for the direct-contact top bar, Home scrolling service strip, and alternating supporting sections across Home, About, Services, Clubs, Share Prices, Contact, Our Team, and Club detail pages. Blue surfaces use dark readable copy; medium-blue utility bands use white copy. Night mode rules remain unchanged.
+- `src/content/company.ts` — removed the unused `info@pgaclubshares.com`; company emails are now `pgaclubshares@gmail.com` (primary) and `info@pgaclubshares.ph` (secondary).
+- `src/content/team.ts` — team profiles that previously used the generic `info@pgaclubshares.com` fallback now use the primary company Gmail address; individual salesperson email addresses remain unchanged.
+- `src/components/site/header.tsx`, `src/app/layout.tsx`, `src/app/manifest.ts` — light browser/theme metadata now follows the dominant apple-green brand instead of the earlier blue experiment.
+- No Club/Share Price API route, BFF data contract, search/filter behavior, backend integration, portrait mapping, or Night-mode palette was changed.
