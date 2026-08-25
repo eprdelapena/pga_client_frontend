@@ -92,3 +92,18 @@ No existing PGA backend or admin frontend file was modified.
   - Changed the About hero from a bottom-heavy composition to a centered desktop composition and reduced headline/support spacing.
   - Added responsive compact-height rules for tablet/mobile without changing page content or imagery.
 - No API routes, catalog logic, Share Price logic, Clubs logic, or server/BFF files were changed.
+
+## Phase 5 — Our Team public directory
+- `src/app/our-team/page.tsx` — new premium `/our-team` page with compact hero, Officers and Salesmen introduction, visible public contact/registration details, grouped team cards, responsive layout, and reduced-motion-safe reveal/hover animation.
+- `src/content/team.ts` — typed source dataset for 17 supplied officers/sales personnel; only contact fields visible in the supplied references are included.
+- `public/images/team/*.webp` — 17 mapped team portraits: 7 from `last_batch_enhanced_portraits_only(1).zip` and 10 faithful crops from the supplied legacy team-directory screenshots where separate portrait files were not provided.
+- `src/components/site/header.tsx` — added `Our Team` to primary/mobile navigation.
+- `src/components/site/footer.tsx` — added `Our Team` to footer navigation.
+- `src/app/sitemap.ts` — added `/our-team` public sitemap entry.
+- `src/app/globals.css` — Our Team hero/card/contact/responsive/dark-mode styles plus a small desktop navigation gap rebalance for the additional route.
+- Existing PGA BFF/API routes, Club data, Share Price data, filters, search, and admin/backend projects were not modified.
+## Our Team content-first refinement
+- Removed the `/our-team` hero and introductory marketing blocks so the team directory is visible immediately on page load.
+- Added content-first top spacing beneath the fixed header and enabled the light-page header treatment for `/our-team`.
+- Preserved all team profiles, enhanced portraits, contact details, animations, and downstream CTA content.
+

@@ -69,3 +69,28 @@ Then smoke-test at minimum:
 - [x] Short-desktop-height fallback rules are present.
 - [x] Tablet/mobile compact rules are present.
 - [x] Reduced-motion rules from the prior Home/About enhancement remain intact.
+
+## Our Team public directory source checks
+- [x] `/our-team` source route exists and defines page metadata.
+- [x] Primary and footer navigation contain `Our Team`.
+- [x] 17 team profiles are represented once each in the typed team dataset.
+- [x] 17 referenced team portrait assets exist under `public/images/team/`.
+- [x] Every provided email is rendered as a visible `mailto:` link.
+- [x] Every provided landline/mobile value is rendered visibly and linked with `tel:` where present.
+- [x] CR / registration numbers are shown directly on the cards when supplied.
+- [x] Haidee E. Reyes and Rodezza B. Labrador do not receive an invented mobile number because the supplied screenshot crops do not visibly provide one.
+- [x] Cards include long-email overflow handling and 3/2/1-column desktop/tablet/mobile behavior.
+- [x] Light/dark mode rules and `prefers-reduced-motion` handling are present.
+- [x] `/api/clubs` and `/api/share-prices` were not changed for this feature.
+- [ ] Full `npm run lint`, `npm run typecheck`, and `npm run build` — run when project dependencies are available in the execution environment.
+
+### Execution environment result — Our Team
+- `npm ci --offline` — cannot install because required packages are not cached (`ENOTCACHED` for `@types/node`).
+- Full local `npm run lint`, `npm run typecheck`, and `npm run build` therefore cannot be claimed in this execution environment.
+- Fallback source validation: all 53 `src/**/*.ts` / `src/**/*.tsx` files transpile with 0 TypeScript syntax diagnostics using the available global TypeScript compiler; all 17 team image paths resolve; 17 team names are unique; header/footer/sitemap integrations are present.
+## Our Team content-first check
+- [x] `/our-team` no longer renders the removed hero/intro copy.
+- [x] Leadership & Directors directory is the first page content beneath the fixed header.
+- [x] Existing team data and portrait paths remain unchanged.
+- [x] `/our-team` uses the light/content-first header state at the top of the page.
+

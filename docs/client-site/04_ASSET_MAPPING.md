@@ -129,3 +129,11 @@ These assets originate from `new_pga_enhanced_images_only.zip` and are used only
 | `prestige_golf_raffle_registration_booth.png` | `public/images/company/pga-community-booth.webp` | About responsive gallery |
 
 The files are WebP optimizations of the supplied imagery; no Club identity mapping was changed.
+
+## Our Team portraits
+The `/our-team` directory uses 17 portrait assets under `public/images/team/`.
+
+- Enhanced portrait ZIP source: Elsie L. Tuason, Roselle M. Mendoza, Ivy C. Kaushik, Dixie Zolina-Masmela, Haidee E. Reyes, Marc Nilo D. Samonte, Apple T. Jaldon.
+- Supplied legacy directory screenshot crops: Alexander T. Lee, Chris Rey Generican, Nicolete U. David, Normita Q. Ramiro, Rodezza B. Labrador, Ro-an Castillo, Pauline Lachica, Kristine Pabrualinan, Anelyn O. Pantua, Joan Santos.
+
+No new people or AI replacement portraits were generated for the page.

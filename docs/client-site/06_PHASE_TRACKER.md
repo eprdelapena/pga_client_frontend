@@ -64,3 +64,12 @@ Release validation / bug fixes only. Run the real local build and browser checks
 - About hero, story, market-role, approach, gallery, decade band, and closing CTA refined
 - existing Clubs/Share Prices/BFF behavior preserved
 - existing lightweight reveal/motion system reused; reduced-motion support preserved
+
+## Phase 5 — Our Team public directory completed at source level
+- new `/our-team` route added to the public client website
+- 17 officers/sales personnel represented from the supplied legacy directory references
+- all supplied public CR/registration, landline, mobile, and email details shown directly on each profile when visible in the source material
+- 7 supplied enhanced portraits integrated and 10 faithful portrait crops prepared from the supplied reference screenshots; no new people or replacement portraits generated
+- primary/footer navigation and sitemap updated
+- responsive light/dark presentation and reduced-motion-safe reveal/hover animation added
+- existing Clubs, Share Prices, Google Sheet/BFF, search/filter/sort, rate limiting, and PGA backend/admin behavior preserved
