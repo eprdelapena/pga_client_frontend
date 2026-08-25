@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {pageMetadata} from '@/lib/site';
 import {Reveal} from '@/components/motion/reveal';
 import {COMPANY} from '@/content/company';
+import {CurrentOfficeGallery} from '@/components/company/current-office-gallery';
 
 export const metadata: Metadata = pageMetadata(
   'About PGA Clubshares',
@@ -69,6 +70,8 @@ export default function AboutPage(){return <>
       <Reveal delay={160}><blockquote>“{COMPANY.philosophy[0]}”</blockquote></Reveal>
     </div>
   </div></section>
+
+  <CurrentOfficeGallery/>
 
   <section className="company-gallery-section"><div className="shell">
     <Reveal><div className="company-gallery-head"><p className="eyebrow light">Life at PGA</p><h2>Present where the market, the clubs, and the <em>community meet.</em></h2><p>Selected moments from PGA activities and golf-related events.</p></div></Reveal>
