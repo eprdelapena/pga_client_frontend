@@ -119,7 +119,7 @@ export default async function Home() {
 
             <div className="company-hero-photo company-hero-photo-team">
               <Image
-                src="/images/company/pga-team.webp"
+                src="/images/company/current-office/team-together.jpg"
                 alt="Prestige Golf Access & Clubshares team"
                 fill
                 unoptimized
