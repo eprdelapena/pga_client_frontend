@@ -7,20 +7,11 @@ export type TeamMember = {
   landline?: string;
   mobile?: string;
   email?: string;
-  image: string;
+  image?: string;
   group: TeamGroup;
 };
 
 export const TEAM_MEMBERS: TeamMember[] = [
-  {
-    name: 'Alexander T. Lee',
-    role: 'Director',
-    landline: '+02 8646 9506',
-    mobile: '+63 917 955 3622',
-    email: 'pgaclubshares@gmail.com',
-    image: '/images/team/alexander-t-lee-enhanced-v2.webp',
-    group: 'Leadership & Directors',
-  },
   {
     name: 'Chris Rey Generican',
     role: 'CEO / Director',
@@ -51,22 +42,26 @@ export const TEAM_MEMBERS: TeamMember[] = [
     group: 'Leadership & Directors',
   },
   {
-    name: 'Elsie L. Tuason',
+    name: 'Alexander T. Lee',
+    role: 'Director',
+    landline: '+02 8646 9506',
+    mobile: '+63 917 955 3622',
+    email: 'pgaclubshares@gmail.com',
+    image: '/images/team/alexander-t-lee-enhanced-v2.webp',
+    group: 'Leadership & Directors',
+  },
+  {
+    name: 'Ted Guinto',
+    role: 'Director',
+    group: 'Leadership & Directors',
+  },
+  {
+    name: 'Elsie Lopez',
     role: 'Director',
     landline: '+02 8646 9506',
     mobile: '+63 917 955 3622',
     email: 'pgaclubshares@gmail.com',
     image: '/images/team/elsie-l-tuason.webp',
-    group: 'Leadership & Directors',
-  },
-  {
-    name: 'Roselle M. Mendoza',
-    role: 'Director',
-    crNumber: '02-2018-13169',
-    landline: '+02 8646 9506',
-    mobile: '+63 917 955 3622',
-    email: 'roselle@pgaclubshares.com',
-    image: '/images/team/roselle-m-mendoza.webp',
     group: 'Leadership & Directors',
   },
   {
@@ -77,6 +72,22 @@ export const TEAM_MEMBERS: TeamMember[] = [
     mobile: '+63 917 955 3622',
     email: 'ivy.kaushik@pgaclubshares.com',
     image: '/images/team/ivy-c-kaushik.webp',
+    group: 'Leadership & Directors',
+  },
+  {
+    name: 'Haruo Kawai',
+    role: 'Director',
+    image: '/images/team/haruo-kawai.webp',
+    group: 'Leadership & Directors',
+  },
+  {
+    name: 'Roselle M. Mendoza',
+    role: 'Director',
+    crNumber: '02-2018-13169',
+    landline: '+02 8646 9506',
+    mobile: '+63 917 955 3622',
+    email: 'roselle@pgaclubshares.com',
+    image: '/images/team/roselle-m-mendoza.webp',
     group: 'Leadership & Directors',
   },
   {

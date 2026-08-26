@@ -65,14 +65,18 @@ function TeamCard({
             aria-hidden="true"
           />
 
-          <div className="team-portrait">
-            <Image
-              src={member.image}
-              alt={`Portrait of ${member.name}`}
-              fill
-              unoptimized
-              sizes="(max-width: 680px) 78vw, (max-width: 980px) 42vw, 28vw"
-            />
+          <div className={`team-portrait ${!member.image ? 'team-portrait-empty' : ''}`}>
+            {member.image ? (
+              <Image
+                src={member.image}
+                alt={`Portrait of ${member.name}`}
+                fill
+                unoptimized
+                sizes="(max-width: 680px) 78vw, (max-width: 980px) 42vw, 28vw"
+              />
+            ) : (
+              <span className="sr-only">Photo not yet available for {member.name}</span>
+            )}
           </div>
         </div>
 
@@ -83,38 +87,40 @@ function TeamCard({
 
           <h3>{member.name}</h3>
 
-          <dl className="team-contact-list">
-            {member.crNumber && (
-              <ContactRow
-                label="CR No."
-                value={member.crNumber}
-              />
-            )}
+          {(member.crNumber || member.landline || member.mobile || member.email) && (
+            <dl className="team-contact-list">
+              {member.crNumber && (
+                <ContactRow
+                  label="CR No."
+                  value={member.crNumber}
+                />
+              )}
 
-            {member.landline && (
-              <ContactRow
-                label="Landline"
-                value={member.landline}
-                href={telephoneHref(member.landline)}
-              />
-            )}
+              {member.landline && (
+                <ContactRow
+                  label="Landline"
+                  value={member.landline}
+                  href={telephoneHref(member.landline)}
+                />
+              )}
 
-            {member.mobile && (
-              <ContactRow
-                label="Mobile"
-                value={member.mobile}
-                href={telephoneHref(member.mobile)}
-              />
-            )}
+              {member.mobile && (
+                <ContactRow
+                  label="Mobile"
+                  value={member.mobile}
+                  href={telephoneHref(member.mobile)}
+                />
+              )}
 
-            {member.email && (
-              <ContactRow
-                label="Email"
-                value={member.email}
-                href={`mailto:${member.email}`}
-              />
-            )}
-          </dl>
+              {member.email && (
+                <ContactRow
+                  label="Email"
+                  value={member.email}
+                  href={`mailto:${member.email}`}
+                />
+              )}
+            </dl>
+          )}
         </div>
       </article>
     </Reveal>
