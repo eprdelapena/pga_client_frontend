@@ -47,7 +47,7 @@ export function ClubMarketCards({rows}: {rows: PublicMarketPrice[]}) {
           <section className="rights-panel share-rights-panel">
             <div className="rights-panel-orbit" aria-hidden="true"><i/><i/></div>
             <header className="rights-panel-head">
-              <div><span className="rights-kicker">Ownership market</span><h3>Share Rights</h3></div>
+              <div><span className="rights-kicker">Ownership market</span><h3>Transfer of Share</h3></div>
               <span className="rights-number">01</span>
             </header>
             <p className="rights-description">For clients looking to buy or sell the Club Share itself.</p>

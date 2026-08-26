@@ -457,7 +457,7 @@ body{background:linear-gradient(180deg,var(--paper),#f8f7f1 34%,var(--paper));}
   padding-top:calc(var(--header-h) + clamp(28px,3vw,44px));
 }
 
-/* ===== CLUB DETAIL — split Share Rights / Playing Rights market ===== */
+/* ===== CLUB DETAIL — split Transfer of Share / Playing Rights market ===== */
 .club-detail-logo-panel{isolation:isolate}
 .club-detail-logo{z-index:2;transition:transform .65s var(--ease),box-shadow .65s var(--ease)}
 .club-detail-logo-panel:hover .club-detail-logo{transform:translateY(-8px) scale(1.025);box-shadow:0 42px 110px rgba(0,0,0,.3)}
