@@ -10,7 +10,6 @@ const links = [
   ['/', 'Home'],
   ['/clubs', 'Clubs'],
   ['/club-map', 'Club Map'],
-  ['/share-prices', 'Share Prices'],
   ['/services', 'Services'],
   ['/about', 'About'],
   ['/our-team', 'Our Team'],
@@ -99,11 +98,13 @@ export function Header() {
     setTheme(next);
   };
 
+  const isHome = pathname === '/';
+  const displayedLinks = links;
   const isActive = (href: string) => href === '/' ? pathname === '/' : pathname.startsWith(href);
   const lightTopPage = pathname === '/clubs' || pathname === '/club-map' || pathname === '/share-prices' || pathname === '/our-team' || pathname === '/contact';
 
   return (
-    <header className={`site-header phase3-header ${lightTopPage ? 'is-light-page' : ''} ${scrolled ? 'is-scrolled' : ''}`}>
+    <header className={`site-header phase3-header ${isHome ? 'is-home-page' : ''} ${lightTopPage ? 'is-light-page' : ''} ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="contact-topbar" aria-label="PGA direct contact channels">
         <div className="shell contact-topbar-inner">
           <span className="contact-topbar-kicker">Direct company channels</span>
@@ -121,17 +122,17 @@ export function Header() {
           <span className="brand-logo-wrap" aria-hidden="true">
             <Image className="brand-logo-image" src="/images/brand/pga-10th-anniversary-logo.png" alt="" width={58} height={58} priority sizes="58px" />
           </span>
-          <span className="brand-copy"><strong>Prestige</strong><small>Golf Access & Clubshares</small></span>
+          <span className="brand-copy brand-copy-global"><strong>Prestige Golf Access</strong><small>&amp; Clubshares Inc.</small></span>
         </Link>
         <nav className="desktop-nav" aria-label="Primary navigation">
-          {links.map(([href, label]) => <Link key={href} className={isActive(href) ? 'is-active' : ''} aria-current={isActive(href) ? 'page' : undefined} href={href}>{label}</Link>)}
+          {displayedLinks.map(([href, label]) => <Link key={href} className={isActive(href) ? 'is-active' : ''} aria-current={isActive(href) ? 'page' : undefined} href={href}>{label}</Link>)}
         </nav>
         <div className="desktop-actions">
           <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'night'} mode`} title={`Switch to ${theme === 'dark' ? 'light' : 'night'} mode`}>
             <span className="theme-toggle-icon"><ThemeIcon theme={theme === 'dark' ? 'light' : 'dark'}/></span>
             <span className="theme-toggle-label">{theme === 'dark' ? 'Light' : 'Night'}</span>
           </button>
-          <Link className="nav-cta desktop-cta" href="/share-prices">View Market <span aria-hidden="true">↗</span></Link>
+          <Link className="nav-cta desktop-cta" href="/share-prices">Share Price <span aria-hidden="true">↗</span></Link>
         </div>
         <button ref={menuButtonRef} className={`menu-button ${open ? 'is-open' : ''}`} aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen(v => !v)}>
           <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span><i/><i/>
@@ -141,7 +142,7 @@ export function Header() {
         <div className="mobile-menu-backdrop" aria-hidden="true"/>
         <div className="shell mobile-menu-layout">
           <nav aria-label="Mobile navigation">
-            {links.map(([href, label], index) => (
+            {displayedLinks.map(([href, label], index) => (
               <Link tabIndex={open ? 0 : -1} key={href} href={href} aria-current={isActive(href) ? 'page' : undefined} onClick={() => setOpen(false)} style={{'--menu-index': index} as CSSProperties}>
                 <span>0{index + 1}</span>{label}<b aria-hidden="true">↗</b>
               </Link>

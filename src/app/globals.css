@@ -1758,3 +1758,24 @@ html[data-theme="dark"] .club-map-sidebar{background:#0b1510;border-color:#26382
   }
   .company-about-story-note strong{font-size:25px}
 }
+
+
+/* Shared header corrections from review markup — applied on every page. */
+.phase3-header .brand-copy-global{
+  font-family:Impact,Haettenschweiler,"Arial Narrow Bold",sans-serif;
+  line-height:.98;
+  text-transform:uppercase;
+}
+.phase3-header .brand-copy-global strong,
+.phase3-header .brand-copy-global small{
+  font-family:Impact,Haettenschweiler,"Arial Narrow Bold",sans-serif;
+  font-weight:400;
+  letter-spacing:.005em;
+  text-transform:uppercase;
+}
+.phase3-header .brand-copy-global strong{font-size:21px}
+.phase3-header .brand-copy-global small{font-size:21px;margin-top:2px}
+@media(max-width:560px){
+  .phase3-header .brand-copy-global strong,
+  .phase3-header .brand-copy-global small{font-size:17px}
+}

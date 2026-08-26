@@ -128,7 +128,6 @@ export default async function Home() {
             </div>
 
             <div className="company-hero-float-card">
-              <span>Market paths</span>
               <strong>Buy · Sell · Lease</strong>
               <small>Golf & country club shares</small>
             </div>
