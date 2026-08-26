@@ -2,7 +2,7 @@
 
 Premium public Next.js client-facing website for **Prestige Golf Access & Clubshares, Inc.**
 
-## Current public data sourcee
+## Current public data source
 
 The website now defaults to PGA's shared Google Sheet for the public Club Directory and Share Price market.
 
