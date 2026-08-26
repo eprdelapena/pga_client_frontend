@@ -3,7 +3,7 @@ import {Reveal} from '@/components/motion/reveal';
 
 const moments = [
   {
-    src: '/images/company/current-office/office-team.webp',
+    src: '/images/company/about-team-banner.jpg',
     alt: 'Prestige Golf Access & Clubshares team inside the office',
     label: 'The PGA team',
     className: 'current-office-card-feature',
