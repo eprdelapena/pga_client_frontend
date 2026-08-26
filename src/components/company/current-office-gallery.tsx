@@ -51,7 +51,7 @@ const moments = [
     className: 'current-office-card-conference',
   },
   {
-    src: '/images/company/current-office/team-headquarters.webp',
+    src: '/images/company/current-office/team-together.jpg',
     alt: 'Prestige Golf Access & Clubshares team gathered outside their office building',
     label: 'Together as one team',
     className: 'current-office-card-headquarters',

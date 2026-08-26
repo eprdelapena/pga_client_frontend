@@ -41,7 +41,7 @@ export default function AboutPage(){return <>
   <section className="section company-about-story"><div className="shell company-about-story-grid">
     <Reveal className="company-about-story-copy"><p className="eyebrow">Our story</p><h2>Built around a specialized market and the <em>people navigating it.</em></h2><p>{COMPANY.organization}</p><p>PGA works with buyers, sellers, lessees, and lessors who need a clear way into the golf and country club share market. The role is practical: understand the requirement, provide market context, and help coordinate the transaction and membership steps that follow.</p><Link className="text-link" href="/services">Explore our services <span>↗</span></Link></Reveal>
     <div className="company-about-story-visual">
-      <Reveal className="company-about-story-photo"><Image src="/images/company/pga-decade-celebration.webp" alt="PGA Clubshares decade celebration artwork featuring the team" fill sizes="(max-width: 820px) 72vw, 28vw"/></Reveal>
+      <Reveal className="company-about-story-photo"><Image src="/images/company/pga-10th-anniversary-message.png" alt="PGA Clubshares 10th anniversary message featuring the team" fill sizes="(max-width: 820px) 72vw, 28vw"/></Reveal>
       <Reveal delay={120} className="company-about-story-course"><Image src="/images/company/golf-course-sunset.webp" alt="Golf course at sunset" fill sizes="(max-width: 820px) 56vw, 22vw"/></Reveal>
       <div className="company-about-story-note"><strong>A decade</strong><span>of serving clients in the Philippine club-share market</span></div>
     </div>
