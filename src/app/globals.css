@@ -1185,9 +1185,9 @@ html[data-theme="dark"] .theme-toggle-icon svg{stroke:#f7fbf8}
 .company-photo-story-copy h2{font-family:var(--serif);font-size:clamp(46px,5vw,76px);font-weight:500;line-height:.96;letter-spacing:-.045em;margin:0 0 32px}.company-photo-story-copy h2 em{font-weight:400;color:var(--green-700)}
 .company-photo-story-copy>p:not(.eyebrow){color:var(--muted);max-width:590px;font-size:16px}.company-photo-story-copy .text-link{margin-top:18px}
 .company-photo-collage{height:720px;position:relative}.company-photo-collage .reveal{position:absolute}.company-photo-collage img{object-fit:cover;transition:transform .9s var(--ease)}.company-photo-collage .reveal:hover img{transform:scale(1.025)}
-.company-photo-collage-main{left:7%;top:0;width:47%;height:72%;z-index:2}.company-photo-collage-main img{object-position:center 35%}
+.company-photo-collage-main{left:5%;top:0;width:54%;height:72%;z-index:2}.company-photo-collage-main img{object-position:center 35%}
 .company-photo-collage-wide{right:0;bottom:0;width:63%;height:42%;z-index:3;border:9px solid #fff}.company-photo-collage-wide img{object-position:center 55%}
-.company-photo-collage-small{right:3%;top:5%;width:34%;height:38%;z-index:1}.company-photo-collage-small img{object-position:center 45%}
+.company-photo-collage-small{right:2%;top:8%;width:41%;height:40%;z-index:4;border:7px solid #fff}.company-photo-collage-small img{object-position:center 45%}
 .company-photo-collage-note{position:absolute;left:0;bottom:5%;width:245px;background:var(--green-900);color:#fff;padding:25px 24px;z-index:5;box-shadow:0 22px 55px rgba(5,47,35,.18)}
 .company-photo-collage-note strong{display:block;font-family:var(--serif);font-size:35px;font-weight:500;color:var(--lime)}.company-photo-collage-note span{display:block;margin-top:8px;font-size:10px;line-height:1.55;text-transform:uppercase;letter-spacing:.09em;color:#c5d9cf}
 
@@ -1578,3 +1578,183 @@ html[data-theme="dark"] .club-map-sidebar{background:#0b1510;border-color:#26382
 @media(max-width:1000px){.club-map-layout{grid-template-columns:280px minmax(0,1fr)}}
 @media(max-width:800px){.club-map-page.page-content-first{padding-top:var(--header-h)}.club-map-stage-direct{padding-top:8px}.club-map-layout{grid-template-columns:1fr;height:auto;min-height:0}.club-map-sidebar{height:300px;border-right:0;border-bottom:1px solid var(--line)}.club-map-sidebar-head{padding:14px 14px 10px}.club-map-sidebar-title{margin-bottom:10px}.club-map-sidebar-title strong{font-size:21px}.club-map-search{height:42px}.club-map-club-option{grid-template-columns:42px minmax(0,1fr) 14px;padding:9px 12px}.club-map-club-option-logo{width:38px;height:38px}.club-map-club-option-logo img{width:28px;height:28px;max-width:28px;max-height:28px}.club-map-layout .club-map-canvas-shell{height:560px}.club-map-source-note{padding:0 4px}}
 @media(max-width:520px){.club-map-stage-direct>.shell{width:100%}.club-map-experience-sidebar{border-left:0;border-right:0}.club-map-sidebar{height:270px}.club-map-layout .club-map-canvas-shell{height:520px}.club-map-canvas-topline>span:last-child{display:none}.club-map-legend{left:10px;right:10px;justify-content:center}.club-map-source-note{padding:0 16px}.club-map-page .leaflet-control-zoom{margin-left:10px!important;margin-top:62px!important}}
+
+/* ================================================================
+   HOME + ABOUT — layout balance / image-crop refinement
+   Scope: Home spacing + Home market-story collage + About Our Story.
+   ================================================================ */
+
+/* Home: tighten the vertical rhythm without changing typography/content. */
+.company-photo-story.section,
+.phase3-clubs-preview.section,
+.phase3-market-preview.section,
+.phase3-process.section{
+  padding:clamp(64px,6.4vw,104px) 0;
+}
+.company-service-paths,
+.phase3-services-preview{
+  padding:clamp(68px,6.6vw,108px) 0;
+}
+.phase3-philosophy{
+  padding:clamp(72px,7vw,112px) 0;
+}
+.phase3-proof-strip .proof-strip-grid{min-height:196px}
+.phase3-proof-strip .proof-strip-grid>.reveal{padding-top:38px;padding-bottom:38px}
+.company-service-paths-head{margin-bottom:44px}
+.phase3-clubs-preview .club-grid{margin-top:42px}
+.phase3-clubs-preview .section-end{margin-top:30px}
+.phase3-market-preview .market-title-row{margin-bottom:36px}
+.phase3-process-head{margin-bottom:44px}
+
+/* Home: bring the photo composition closer to the copy and rebalance overlap. */
+.company-photo-story-grid{
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:5vw;
+}
+.company-photo-collage{
+  height:660px;
+  transform:translateX(-2%);
+}
+.company-photo-collage-main{
+  left:2%;
+  top:1%;
+  width:58%;
+  height:69%;
+}
+.company-photo-collage-main img{object-position:center 33%}
+.company-photo-collage-wide{
+  right:1%;
+  bottom:2%;
+  width:61%;
+  height:40%;
+}
+.company-photo-collage-wide img{object-position:center 53%}
+.company-photo-collage-small{
+  right:1%;
+  top:7%;
+  width:43%;
+  height:38%;
+  z-index:4;
+  border:7px solid #fff;
+}
+.company-photo-collage-small img{object-position:center 42%}
+.company-photo-collage-note{left:1%;bottom:3%}
+
+/* About / Our Story: preserve the anniversary paragraph first.
+   The source artwork is portrait; left/top anchoring prevents the paragraph
+   from being lost by center-cropping, while the lower decorative JULY area
+   may be overlapped by the golf-course card. */
+.company-about-story-grid{
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:5.5vw;
+}
+.company-about-story-visual{height:660px}
+.company-about-story-photo{
+  left:0;
+  top:0;
+  width:60%;
+  height:79%;
+}
+.company-about-story-photo img{
+  object-fit:cover;
+  object-position:left top;
+}
+.company-about-story-course{
+  right:0;
+  bottom:2%;
+  width:54%;
+  height:39%;
+}
+.company-about-story-course img{object-position:center 57%}
+.company-about-story-note{
+  right:0;
+  top:4%;
+  width:190px;
+}
+
+@media(max-width:1100px){
+  .company-photo-story-grid,.company-about-story-grid{gap:4vw}
+  .company-photo-collage{height:610px;transform:translateX(-1%)}
+  .company-about-story-visual{height:610px}
+  .company-about-story-photo{width:61%;height:80%}
+  .company-about-story-course{width:55%;height:38%}
+}
+
+@media(max-width:900px){
+  .company-photo-story.section,
+  .phase3-clubs-preview.section,
+  .phase3-market-preview.section,
+  .phase3-process.section{padding:clamp(58px,8vw,78px) 0}
+  .company-service-paths,
+  .phase3-services-preview,
+  .phase3-philosophy{padding:clamp(62px,8.5vw,84px) 0}
+  .phase3-proof-strip .proof-strip-grid{min-height:0}
+  .phase3-proof-strip .proof-strip-grid>.reveal{padding-top:30px;padding-bottom:30px}
+
+  .company-photo-story-grid,.company-about-story-grid{grid-template-columns:1fr}
+  .company-photo-collage{height:620px;margin-top:12px;transform:none}
+
+  .company-about-story-visual{height:640px;margin-top:14px}
+  .company-about-story-photo{left:1%;width:56%;height:79%}
+  .company-about-story-course{width:55%;height:38%;bottom:1%}
+  .company-about-story-note{right:1%;top:3%}
+}
+
+@media(max-width:680px){
+  .company-photo-story.section,
+  .phase3-clubs-preview.section,
+  .phase3-market-preview.section,
+  .phase3-process.section{padding:54px 0}
+  .company-service-paths,
+  .phase3-services-preview,
+  .phase3-philosophy{padding:58px 0}
+  .company-service-paths-head{margin-bottom:34px}
+  .phase3-clubs-preview .club-grid{margin-top:32px}
+  .phase3-market-preview .market-title-row{margin-bottom:28px}
+  .phase3-process-head{margin-bottom:34px}
+
+  .company-photo-collage{height:500px;margin-top:8px}
+  .company-photo-collage-main{left:0;top:0;width:58%;height:67%}
+  .company-photo-collage-wide{right:0;bottom:1%;width:70%;height:36%;border-width:6px}
+  .company-photo-collage-small{right:0;top:5%;width:43%;height:32%;border-width:5px}
+  .company-photo-collage-note{left:0;bottom:4%;width:176px;padding:16px}
+  .company-photo-collage-note strong{font-size:27px}
+
+  /* Stack the About artwork responsively so the complete message area can
+     breathe. The course card still overlaps only the decorative lower area. */
+  .company-about-story-visual{
+    height:auto;
+    min-height:0;
+    margin-top:14px;
+    padding-bottom:8px;
+  }
+  .company-about-story-visual .reveal{position:relative}
+  .company-about-story-photo{
+    left:auto;
+    top:auto;
+    width:88%;
+    height:auto;
+    aspect-ratio:1308 / 1638;
+    box-shadow:0 20px 48px rgba(5,47,35,.14);
+  }
+  .company-about-story-photo img{
+    object-fit:contain;
+    object-position:left top;
+  }
+  .company-about-story-course{
+    right:auto;
+    bottom:auto;
+    width:72%;
+    height:auto;
+    aspect-ratio:4 / 3;
+    margin:-19% 0 0 auto;
+    border-width:6px;
+  }
+  .company-about-story-note{
+    right:0;
+    top:3%;
+    width:160px;
+    padding:14px;
+  }
+  .company-about-story-note strong{font-size:25px}
+}
