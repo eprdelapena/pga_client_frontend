@@ -29,7 +29,7 @@ const gallery = [
 
 export default function AboutPage(){return <>
   <section className="page-hero about-hero phase1-page-hero phase3-page-hero company-about-hero">
-    <div className="company-about-hero-photo"><Image src="/images/company/pga-team.webp" alt="Prestige Golf Access & Clubshares team" fill priority sizes="100vw"/></div>
+    <div className="company-about-hero-photo"><Image src="/images/company/about-team-banner.jpg" alt="Prestige Golf Access & Clubshares team at the PGA office" fill priority sizes="100vw"/></div>
     <div className="company-about-hero-overlay" aria-hidden="true"/>
     <div className="shell company-about-hero-content">
       <Reveal><p className="eyebrow light">Company profile / PGA</p><h1>A decade of<br/><em>market familiarity.</em><br/>A personal approach.</h1></Reveal>
