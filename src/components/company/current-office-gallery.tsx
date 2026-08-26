@@ -60,27 +60,46 @@ const moments = [
 
 export function CurrentOfficeGallery() {
   return (
-    <section className="section current-office-section" aria-labelledby="current-office-title">
+    <section
+      className="section current-office-section"
+      aria-labelledby="current-office-title"
+    >
       <div className="shell">
         <Reveal className="current-office-heading">
           <p className="eyebrow">Inside PGA</p>
-          <h2 id="current-office-title">The people and moments behind the <em>client experience.</em></h2>
-          <p>Selected moments from the office, client conversations, documentation, and the team working together.</p>
+
+          <h2 id="current-office-title">
+            The people and moments behind the{' '}
+            <em>client experience.</em>
+          </h2>
+
+          <p>
+            Selected moments from the office, client conversations,
+            documentation, and the team working together.
+          </p>
         </Reveal>
 
         <div className="current-office-grid">
           {moments.map((moment, index) => (
-            <Reveal key={moment.src} delay={index * 55} className={`current-office-card ${moment.className}`}>
+            <Reveal
+              key={moment.src}
+              delay={index * 55}
+              className={`current-office-card ${moment.className}`}
+            >
               <figure>
                 <div className="current-office-image">
                   <Image
                     src={moment.src}
                     alt={moment.alt}
                     fill
+                    unoptimized
                     sizes="(max-width: 620px) 92vw, (max-width: 900px) 46vw, 34vw"
                   />
                 </div>
-                <figcaption>{moment.label}</figcaption>
+
+                <figcaption>
+                  {moment.label}
+                </figcaption>
               </figure>
             </Reveal>
           ))}
