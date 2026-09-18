@@ -1,6 +1,6 @@
 # PGA Clubshares Client Website — Phase 5
 
-Premium public Next.js client-facing website for **Prestige Golf Access & Clubshares, Inc.**
+Premium publicc Next.js client-facing website for **Prestige Golf Access & Clubshares, Inc.**
 
 ## Current public data sourcee
 
